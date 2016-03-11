@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
+import com.harlie.xyzreader.xyzReaderApplication;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -97,6 +98,12 @@ public class ArticleDetailFragment extends Fragment implements
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        xyzReaderApplication.getInstance().mustDie(this); // check that fragment does not leak
     }
 
     @Override

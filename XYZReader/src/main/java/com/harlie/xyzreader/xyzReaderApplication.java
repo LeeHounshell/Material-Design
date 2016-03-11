@@ -9,6 +9,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 
 //from: http://www.androidhive.info/2015/08/android-integrating-google-analytics-v4/
@@ -18,13 +19,14 @@ public class xyzReaderApplication extends Application {
 
     private static Context sContext;
     private static xyzReaderApplication mInstance;
+    private RefWatcher refWatcher;
 
     public void onCreate() {
-        Log.v(TAG, "onCreate");
-        mInstance = this;
+        Log.v(TAG, "===> onCreate <===");
+        xyzReaderApplication.mInstance = this;
         super.onCreate();
-        LeakCanary.install(this);
         xyzReaderApplication.sContext = getApplicationContext();
+        refWatcher = LeakCanary.install(this);
         AnalyticsTrackers.initialize(this);
         AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
     }
@@ -92,6 +94,18 @@ public class xyzReaderApplication extends Application {
 
         // Build and send an Event.
         t.send(new HitBuilders.EventBuilder().setCategory(category).setAction(action).setLabel(label).build());
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        xyzReaderApplication application = (xyzReaderApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+    // from: http://stackoverflow.com/questions/33654503/how-to-use-leak-canary
+    public void mustDie(Object object) {
+        if (refWatcher != null) {
+            refWatcher.watch(object);
+        }
     }
 
 }
