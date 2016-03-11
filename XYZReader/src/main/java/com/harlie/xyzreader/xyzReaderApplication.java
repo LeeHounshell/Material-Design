@@ -8,6 +8,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.leakcanary.LeakCanary;
 
 
 //from: http://www.androidhive.info/2015/08/android-integrating-google-analytics-v4/
@@ -22,6 +23,7 @@ public class xyzReaderApplication extends Application {
         Log.v(TAG, "onCreate");
         mInstance = this;
         super.onCreate();
+        LeakCanary.install(this);
         xyzReaderApplication.sContext = getApplicationContext();
         AnalyticsTrackers.initialize(this);
         AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
