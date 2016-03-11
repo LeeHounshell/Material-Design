@@ -1,34 +1,92 @@
+
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:2.1.0-alpha1'
     }
 }
+
 apply plugin: 'com.android.application'
+apply from: '../preprocessor.gradle' //#IFDEF support
 
 repositories {
     mavenCentral()
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    if (project.hasProperty("MyProject.properties")
+            && new File(project.property("MyProject.properties") as String).exists()) {
+
+        Properties props = new Properties()
+        props.load(new FileInputStream(file(project.property("MyProject.properties"))))
+
+        signingConfigs {
+            release {
+                keyAlias props['keystore.alias']
+                keyPassword props['keystore.password']
+                storeFile file(props['keystore'])
+                storePassword props['keystore.password']
+            }
+            debug {
+                keyAlias props['keystore.alias']
+                keyPassword props['keystore.password']
+                storeFile file(props['keystore'])
+                storePassword props['keystore.password']
+            }
+        }
+    }
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
+        applicationId "com.harlie.xyzreader"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+        paid {
+            applicationId "com.harlie.xyzreader.paid"
+            versionName "1.0-Paid"
+        }
+        free {
+            applicationId "com.harlie.xyzreader.free"
+            versionName "1.0-Free"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.0.0'
-    compile 'com.android.support:support-v13:22.0.0'
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.android.support:palette-v7:22.0.0'
-    compile 'com.android.support:recyclerview-v7:22.0.0'
-    compile 'com.android.support:cardview-v7:22.0.0'
+    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:support-v13:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:palette-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile files('libs/volley.jar')
+    // Google Analytics
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
 }
+
