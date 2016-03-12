@@ -36,7 +36,7 @@ import com.harlie.xyzreader.xyzReaderApplication;
  */
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "ArticleDetailFragment";
+    private final static String TAG = "LEE: <" + ArticleDetailFragment.class.getSimpleName() + ">";
 
     public static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
@@ -61,9 +61,11 @@ public class ArticleDetailFragment extends Fragment implements
      * fragment (e.g. upon screen orientation changes).
      */
     public ArticleDetailFragment() {
+        Log.v(TAG, "ArticleDetailFragment");
     }
 
     public static ArticleDetailFragment newInstance(long itemId) {
+        Log.v(TAG, "newInstance");
         Bundle arguments = new Bundle();
         arguments.putLong(ARG_ITEM_ID, itemId);
         ArticleDetailFragment fragment = new ArticleDetailFragment();
@@ -73,6 +75,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.v(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
@@ -86,11 +89,13 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     public ArticleDetailActivity getActivityCast() {
+        Log.v(TAG, "getActivityCast");
         return (ArticleDetailActivity) getActivity();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        Log.v(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
 
         // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
@@ -102,6 +107,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public void onDestroy() {
+        Log.v(TAG, "onDestroy");
         super.onDestroy();
         xyzReaderApplication.getInstance().mustDie(this); // check that fragment does not leak
     }
@@ -109,6 +115,7 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        Log.v(TAG, "onCreateView");
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
                 mRootView.findViewById(R.id.draw_insets_frame_layout);
@@ -138,6 +145,7 @@ public class ArticleDetailFragment extends Fragment implements
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v(TAG, "onClick");
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
                         .setText("Some sample text")
@@ -151,6 +159,7 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     private void updateStatusBar() {
+        Log.v(TAG, "updateStatusBar");
         int color = 0;
         if (mPhotoView != null && mTopInset != 0 && mScrollY > 0) {
             float f = progress(mScrollY,
@@ -166,10 +175,12 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     static float progress(float v, float min, float max) {
+        Log.v(TAG, "progress");
         return constrain((v - min) / (max - min), 0, 1);
     }
 
     static float constrain(float val, float min, float max) {
+        Log.v(TAG, "constrain");
         if (val < min) {
             return min;
         } else if (val > max) {
@@ -180,6 +191,7 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     private void bindViews() {
+        Log.v(TAG, "bindViews");
         if (mRootView == null) {
             return;
         }
@@ -234,11 +246,13 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Log.v(TAG, "onCreateLoader");
         return ArticleLoader.newInstanceForItemId(getActivity(), mItemId);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        Log.v(TAG, "onLoadFinished");
         if (!isAdded()) {
             if (cursor != null) {
                 cursor.close();
@@ -258,11 +272,13 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        Log.v(TAG, "onLoaderReset");
         mCursor = null;
         bindViews();
     }
 
     public int getUpButtonFloor() {
+        Log.v(TAG, "getUpButtonFloor");
         if (mPhotoContainerView == null || mPhotoView.getHeight() == 0) {
             return Integer.MAX_VALUE;
         }

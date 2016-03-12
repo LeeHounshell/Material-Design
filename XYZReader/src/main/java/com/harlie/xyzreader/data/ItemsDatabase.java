@@ -3,19 +3,24 @@ package com.harlie.xyzreader.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import static com.harlie.xyzreader.data.ItemsProvider.Tables;
 
 public class ItemsDatabase extends SQLiteOpenHelper {
+    private final static String TAG = "LEE: <" + SQLiteOpenHelper.class.getSimpleName() + ">";
+
     private static final String DATABASE_NAME = "xyzreader.db";
     private static final int DATABASE_VERSION = 1;
 
     public ItemsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        Log.v(TAG, "ItemsDatabase");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.v(TAG, "onCreate");
         db.execSQL("CREATE TABLE " + Tables.ITEMS + " ("
                 + ItemsContract.ItemsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + ItemsContract.ItemsColumns.SERVER_ID + " TEXT,"
@@ -31,6 +36,7 @@ public class ItemsDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.v(TAG, "onUpgrade");
         db.execSQL("DROP TABLE IF EXISTS " + Tables.ITEMS);
         onCreate(db);
     }

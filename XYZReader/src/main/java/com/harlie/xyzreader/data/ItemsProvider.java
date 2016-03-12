@@ -11,113 +11,125 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsProvider extends ContentProvider {
-	private SQLiteOpenHelper mOpenHelper;
+    private final static String TAG = "LEE: <" + ItemsProvider.class.getSimpleName() + ">";
 
-	interface Tables {
-		String ITEMS = "items";
-	}
+    private SQLiteOpenHelper mOpenHelper;
 
-	private static final int ITEMS = 0;
-	private static final int ITEMS__ID = 1;
+    interface Tables {
+        String ITEMS = "items";
+    }
 
-	private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private static final int ITEMS = 0;
+    private static final int ITEMS__ID = 1;
 
-	private static UriMatcher buildUriMatcher() {
-		final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-		final String authority = ItemsContract.CONTENT_AUTHORITY;
-		matcher.addURI(authority, "items", ITEMS);
-		matcher.addURI(authority, "items/#", ITEMS__ID);
-		return matcher;
-	}
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-	@Override
-	public boolean onCreate() {
+    private static UriMatcher buildUriMatcher() {
+        Log.v(TAG, "buildUriMatcher");
+        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        final String authority = ItemsContract.CONTENT_AUTHORITY;
+        matcher.addURI(authority, "items", ITEMS);
+        matcher.addURI(authority, "items/#", ITEMS__ID);
+        return matcher;
+    }
+
+    @Override
+    public boolean onCreate() {
+        Log.v(TAG, "onCreate");
         mOpenHelper = new ItemsDatabase(getContext());
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public String getType(Uri uri) {
-		final int match = sUriMatcher.match(uri);
-		switch (match) {
-			case ITEMS:
-				return ItemsContract.Items.CONTENT_TYPE;
-			case ITEMS__ID:
-				return ItemsContract.Items.CONTENT_ITEM_TYPE;
-			default:
-				throw new UnsupportedOperationException("Unknown uri: " + uri);
-		}
-	}
+    @Override
+    public String getType(Uri uri) {
+        Log.v(TAG, "getType");
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case ITEMS:
+                return ItemsContract.Items.CONTENT_TYPE;
+            case ITEMS__ID:
+                return ItemsContract.Items.CONTENT_ITEM_TYPE;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+    }
 
-	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-		final SelectionBuilder builder = buildSelection(uri);
-		Cursor cursor = builder.where(selection, selectionArgs).query(db, projection, sortOrder);
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        Log.v(TAG, "query");
+        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SelectionBuilder builder = buildSelection(uri);
+        Cursor cursor = builder.where(selection, selectionArgs).query(db, projection, sortOrder);
         if (cursor != null) {
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
         }
         return cursor;
-	}
+    }
 
-	@Override
-	public Uri insert(Uri uri, ContentValues values) {
-		final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-		final int match = sUriMatcher.match(uri);
-		switch (match) {
-			case ITEMS: {
-				final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-				return ItemsContract.Items.buildItemUri(_id);
-			}
-			default: {
-				throw new UnsupportedOperationException("Unknown uri: " + uri);
-			}
-		}
-	}
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        Log.v(TAG, "insert");
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case ITEMS: {
+                final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
+                                getContext().getContentResolver().notifyChange(uri, null);
+                return ItemsContract.Items.buildItemUri(_id);
+            }
+            default: {
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+        }
+    }
 
-	@Override
-	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-		final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-		final SelectionBuilder builder = buildSelection(uri);
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        Log.v(TAG, "update");
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SelectionBuilder builder = buildSelection(uri);
         getContext().getContentResolver().notifyChange(uri, null);
-		return builder.where(selection, selectionArgs).update(db, values);
-	}
+        return builder.where(selection, selectionArgs).update(db, values);
+    }
 
-	@Override
-	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-		final SelectionBuilder builder = buildSelection(uri);
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        Log.v(TAG, "delete");
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SelectionBuilder builder = buildSelection(uri);
         getContext().getContentResolver().notifyChange(uri, null);
-		return builder.where(selection, selectionArgs).delete(db);
-	}
+        return builder.where(selection, selectionArgs).delete(db);
+    }
 
-	private SelectionBuilder buildSelection(Uri uri) {
-		final SelectionBuilder builder = new SelectionBuilder();
-		final int match = sUriMatcher.match(uri);
-		return buildSelection(uri, match, builder);
-	}
+    private SelectionBuilder buildSelection(Uri uri) {
+        Log.v(TAG, "buildSelection");
+        final SelectionBuilder builder = new SelectionBuilder();
+        final int match = sUriMatcher.match(uri);
+        return buildSelection(uri, match, builder);
+    }
 
-	private SelectionBuilder buildSelection(Uri uri, int match, SelectionBuilder builder) {
-		final List<String> paths = uri.getPathSegments();
-		switch (match) {
-			case ITEMS: {
-				return builder.table(Tables.ITEMS);
-			}
-			case ITEMS__ID: {
-				final String _id = paths.get(1);
-				return builder.table(Tables.ITEMS).where(ItemsContract.Items._ID + "=?", _id);
-			}
-			default: {
-				throw new UnsupportedOperationException("Unknown uri: " + uri);
-			}
-		}
-	}
+    private SelectionBuilder buildSelection(Uri uri, int match, SelectionBuilder builder) {
+        Log.v(TAG, "buildSelection");
+        final List<String> paths = uri.getPathSegments();
+        switch (match) {
+            case ITEMS: {
+                return builder.table(Tables.ITEMS);
+            }
+            case ITEMS__ID: {
+                final String _id = paths.get(1);
+                return builder.table(Tables.ITEMS).where(ItemsContract.Items._ID + "=?", _id);
+            }
+            default: {
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+        }
+    }
 
     /**
      * Apply the given set of {@link ContentProviderOperation}, executing inside
@@ -126,6 +138,7 @@ public class ItemsProvider extends ContentProvider {
      */
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
+        Log.v(TAG, "applyBatch");
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         db.beginTransaction();
         try {

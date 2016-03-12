@@ -42,6 +42,7 @@ public class xyzReaderApplication extends Application {
     }
 
     public synchronized Tracker getGoogleAnalyticsTracker() {
+        Log.v(TAG, "getGoogleAnalyticsTracker");
         AnalyticsTrackers analyticsTrackers = AnalyticsTrackers.getInstance();
         return analyticsTrackers.get(AnalyticsTrackers.Target.APP);
     }
@@ -52,6 +53,7 @@ public class xyzReaderApplication extends Application {
      * @param screenName screen name to be displayed on GA dashboard
      */
     public void trackScreenView(String screenName) {
+        Log.v(TAG, "trackScreenView");
         Tracker t = getGoogleAnalyticsTracker();
 
         // Set screen name.
@@ -69,6 +71,7 @@ public class xyzReaderApplication extends Application {
      * @param e exception to be tracked
      */
     public void trackException(Exception e) {
+        Log.v(TAG, "trackException");
         if (e != null) {
             Tracker t = getGoogleAnalyticsTracker();
 
@@ -90,6 +93,7 @@ public class xyzReaderApplication extends Application {
      * @param label    label
      */
     public void trackEvent(String category, String action, String label) {
+        Log.v(TAG, "trackEvent");
         Tracker t = getGoogleAnalyticsTracker();
 
         // Build and send an Event.
@@ -97,12 +101,14 @@ public class xyzReaderApplication extends Application {
     }
 
     public static RefWatcher getRefWatcher(Context context) {
+        Log.v(TAG, "getRefWatcher");
         xyzReaderApplication application = (xyzReaderApplication) context.getApplicationContext();
         return application.refWatcher;
     }
 
     // from: http://stackoverflow.com/questions/33654503/how-to-use-leak-canary
     public void mustDie(Object object) {
+        Log.v(TAG, "mustDie");
         if (refWatcher != null) {
             refWatcher.watch(object);
         }

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.harlie.xyzreader.data.ItemsContract;
  */
 public class ArticleDetailActivity extends ActionBarActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
+    private final static String TAG = "LEE: <" + ArticleDetailActivity.class.getSimpleName() + ">";
 
     private Cursor mCursor;
     private long mStartId;
@@ -40,6 +42,7 @@ public class ArticleDetailActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
@@ -82,6 +85,7 @@ public class ArticleDetailActivity extends ActionBarActivity
         mUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v(TAG, "onClick");
                 onSupportNavigateUp();
             }
         });
@@ -109,11 +113,13 @@ public class ArticleDetailActivity extends ActionBarActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Log.v(TAG, "onCreateLoader");
         return ArticleLoader.newAllArticlesInstance(this);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        Log.v(TAG, "onLoadFinished");
         mCursor = cursor;
         mPagerAdapter.notifyDataSetChanged();
 
@@ -135,11 +141,13 @@ public class ArticleDetailActivity extends ActionBarActivity
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        Log.v(TAG, "onLoaderReset");
         mCursor = null;
         mPagerAdapter.notifyDataSetChanged();
     }
 
     public void onUpButtonFloorChanged(long itemId, ArticleDetailFragment fragment) {
+        Log.v(TAG, "onUpButtonFloorChanged");
         if (itemId == mSelectedItemId) {
             mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
             updateUpButtonPosition();
@@ -147,17 +155,22 @@ public class ArticleDetailActivity extends ActionBarActivity
     }
 
     private void updateUpButtonPosition() {
+        Log.v(TAG, "updateUpButtonPosition");
         int upButtonNormalBottom = mTopInset + mUpButton.getHeight();
         mUpButton.setTranslationY(Math.min(mSelectedItemUpButtonFloor - upButtonNormalBottom, 0));
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
+        private final String TAG = "LEE: <" + MyPagerAdapter.class.getSimpleName() + ">";
+
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
+            Log.v(TAG, "MyPagerAdapter");
         }
 
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            Log.v(TAG, "setPrimaryItem");
             super.setPrimaryItem(container, position, object);
             ArticleDetailFragment fragment = (ArticleDetailFragment) object;
             if (fragment != null) {
@@ -168,12 +181,14 @@ public class ArticleDetailActivity extends ActionBarActivity
 
         @Override
         public Fragment getItem(int position) {
+            Log.v(TAG, "getItem");
             mCursor.moveToPosition(position);
             return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
         }
 
         @Override
         public int getCount() {
+            Log.v(TAG, "getCount");
             return (mCursor != null) ? mCursor.getCount() : 0;
         }
     }

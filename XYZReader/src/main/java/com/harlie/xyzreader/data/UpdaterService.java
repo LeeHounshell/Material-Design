@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class UpdaterService extends IntentService {
-    private static final String TAG = "UpdaterService";
+    private final static String TAG = "LEE: <" + UpdaterService.class.getSimpleName() + ">";
 
     public static final String BROADCAST_ACTION_STATE_CHANGE
             = "com.harlie.xyzreader.intent.action.STATE_CHANGE";
@@ -30,10 +30,12 @@ public class UpdaterService extends IntentService {
 
     public UpdaterService() {
         super(TAG);
+        Log.v(TAG, "UpdaterService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.v(TAG, "onHandleIntent");
         Time time = new Time();
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);

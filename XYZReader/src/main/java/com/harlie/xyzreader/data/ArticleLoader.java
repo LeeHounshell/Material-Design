@@ -3,21 +3,27 @@ package com.harlie.xyzreader.data;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Helper for loading a list of articles or a single article.
  */
 public class ArticleLoader extends CursorLoader {
+    private final static String TAG = "LEE: <" + ArticleLoader.class.getSimpleName() + ">";
+
     public static ArticleLoader newAllArticlesInstance(Context context) {
+        Log.v(TAG, "newAllArticlesInstance");
         return new ArticleLoader(context, ItemsContract.Items.buildDirUri());
     }
 
     public static ArticleLoader newInstanceForItemId(Context context, long itemId) {
+        Log.v(TAG, "newInstanceForItemId");
         return new ArticleLoader(context, ItemsContract.Items.buildItemUri(itemId));
     }
 
     private ArticleLoader(Context context, Uri uri) {
         super(context, uri, Query.PROJECTION, null, null, ItemsContract.Items.DEFAULT_SORT);
+        Log.v(TAG, "ArticleLoader");
     }
 
     public interface Query {

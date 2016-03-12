@@ -14,12 +14,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class RemoteEndpointUtil {
-    private static final String TAG = "RemoteEndpointUtil";
+    private final static String TAG = "LEE: <" + RemoteEndpointUtil.class.getSimpleName() + ">";
 
     private RemoteEndpointUtil() {
+        Log.v(TAG, "RemoteEndpointUtil");
     }
 
     public static JSONArray fetchJsonArray() {
+        Log.v(TAG, "fetchJsonArray");
         String itemsJson = null;
         try {
             itemsJson = fetchPlainText(Config.BASE_URL);
@@ -44,6 +46,7 @@ public class RemoteEndpointUtil {
     }
 
     static String fetchPlainText(URL url) throws IOException {
+        Log.v(TAG, "fetchPlainText");
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()

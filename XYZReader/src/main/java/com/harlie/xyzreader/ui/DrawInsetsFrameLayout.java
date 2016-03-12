@@ -23,6 +23,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 
@@ -30,6 +31,8 @@ import com.harlie.xyzreader.R;
 
 
 public class DrawInsetsFrameLayout extends FrameLayout {
+    private final static String TAG = "LEE: <" + DrawInsetsFrameLayout.class.getSimpleName() + ">";
+
     private Drawable mInsetBackground;
     private Drawable mTopInsetBackground;
     private Drawable mBottomInsetBackground;
@@ -41,20 +44,24 @@ public class DrawInsetsFrameLayout extends FrameLayout {
 
     public DrawInsetsFrameLayout(Context context) {
         super(context);
+        Log.v(TAG, "DrawInsetsFrameLayout");
         init(context, null, 0);
     }
 
     public DrawInsetsFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        Log.v(TAG, "DrawInsetsFrameLayout");
         init(context, attrs, 0);
     }
 
     public DrawInsetsFrameLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        Log.v(TAG, "DrawInsetsFrameLayout");
         init(context, attrs, defStyle);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
+        Log.v(TAG, "init");
         final TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.DrawInsetsFrameLayout, defStyle, 0);
         assert a != null;
@@ -65,6 +72,7 @@ public class DrawInsetsFrameLayout extends FrameLayout {
     }
 
     public void setInsetBackground(Drawable insetBackground) {
+        Log.v(TAG, "setInsetBackground");
         if (mInsetBackground != null) {
             mInsetBackground.setCallback(null);
         }
@@ -79,6 +87,7 @@ public class DrawInsetsFrameLayout extends FrameLayout {
 
     @Override
     protected void onAttachedToWindow() {
+        Log.v(TAG, "onAttachedToWindow");
         super.onAttachedToWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             requestApplyInsets();
@@ -90,6 +99,7 @@ public class DrawInsetsFrameLayout extends FrameLayout {
 
     @Override
     protected void onDetachedFromWindow() {
+        Log.v(TAG, "onDetachedFromWindow");
         super.onDetachedFromWindow();
         if (mInsetBackground != null) {
             mInsetBackground.setCallback(null);
@@ -97,11 +107,13 @@ public class DrawInsetsFrameLayout extends FrameLayout {
     }
 
     public void setOnInsetsCallback(OnInsetsCallback onInsetsCallback) {
+        Log.v(TAG, "setOnInsetsCallback");
         mOnInsetsCallback = onInsetsCallback;
     }
 
     @Override
     public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        Log.v(TAG, "onApplyWindowInsets");
         insets = super.onApplyWindowInsets(insets);
         mInsets = new Rect(
                 insets.getSystemWindowInsetLeft(),
@@ -118,6 +130,7 @@ public class DrawInsetsFrameLayout extends FrameLayout {
 
     @Override
     public void draw(Canvas canvas) {
+        Log.v(TAG, "draw");
         super.draw(canvas);
         int width = getWidth();
         int height = getHeight();

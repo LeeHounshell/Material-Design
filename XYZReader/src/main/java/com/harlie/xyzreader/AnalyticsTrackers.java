@@ -1,6 +1,7 @@
 package com.harlie.xyzreader;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -20,6 +21,7 @@ import java.util.Map;
  * before using this!
  */
 public final class AnalyticsTrackers {
+  private final static String TAG = "LEE: <" + AnalyticsTrackers.class.getSimpleName() + ">";
 
   public enum Target {
     APP,
@@ -29,6 +31,7 @@ public final class AnalyticsTrackers {
   private static AnalyticsTrackers sInstance;
 
   public static synchronized void initialize(Context context) {
+    Log.v(TAG, "initialize");
     if (sInstance != null) {
       throw new IllegalStateException("Extra call to initialize analytics trackers");
     }
@@ -37,6 +40,7 @@ public final class AnalyticsTrackers {
   }
 
   public static synchronized AnalyticsTrackers getInstance() {
+    Log.v(TAG, "getInstance");
     if (sInstance == null) {
       throw new IllegalStateException("Call initialize() before getInstance()");
     }
@@ -51,10 +55,12 @@ public final class AnalyticsTrackers {
    * Don't instantiate directly - use {@link #getInstance()} instead.
    */
   private AnalyticsTrackers(Context context) {
+    Log.v(TAG, "AnalyticsTrackers");
     mContext = context.getApplicationContext();
   }
 
   public synchronized Tracker get(@SuppressWarnings("SameParameterValue") Target target) {
+    Log.v(TAG, "get");
     if (!mTrackers.containsKey(target)) {
       Tracker tracker;
       switch (target) {
