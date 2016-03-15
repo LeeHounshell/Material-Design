@@ -48,9 +48,9 @@
                 android:src="@drawable/logo"
                 android:contentDescription="@string/app_name"
                 android:layout_gravity="bottom"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:paddingLeft="24dp"
+                android:paddingStart="72dp"
+                android:paddingEnd="72dp"
+                android:paddingLeft="72dp"
                 android:paddingBottom="12dp"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
@@ -60,6 +60,8 @@
                 app:theme="@style/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                android:contentInsetStart="72dp"
+                app:contentInsetStart="72dp"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 app:layout_collapseMode="pin">
 
