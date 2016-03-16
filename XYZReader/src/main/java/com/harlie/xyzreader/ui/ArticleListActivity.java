@@ -39,7 +39,6 @@ public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private final static String TAG = "LEE: <" + ArticleListActivity.class.getSimpleName() + ">";
 
-    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
@@ -49,9 +48,11 @@ public class ArticleListActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
+        getTheme().applyStyle(new FontPreferences(this).getFontStyle().getResId(), true);
+
         configureToolbarTitleBehavior();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -122,12 +123,26 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.v(TAG, "onOptionsItemSelected");
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.settings: {
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+                return true;
+            }
+            case R.id.about: {
+                Intent i = new Intent(this, AboutActivity.class);
+                startActivity(i);
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
     }
 
     private boolean mIsRefreshing = false;
 
-    private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "onReceive");
@@ -170,7 +185,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private final String TAG = "LEE: <" + Adapter.class.getSimpleName() + ">";
 
-        private Cursor mCursor;
+        private final Cursor mCursor;
 
         public Adapter(Cursor cursor) {
             Log.v(TAG, "Adapter");
@@ -210,7 +225,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                             System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                             DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by "
+                            + " " + getResources().getString(R.string.by) + " "
                             + mCursor.getString(ArticleLoader.Query.AUTHOR));
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
@@ -228,9 +243,9 @@ public class ArticleListActivity extends AppCompatActivity implements
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final static String TAG = "LEE: <" + ViewHolder.class.getSimpleName() + ">";
 
-        public DynamicHeightNetworkImageView thumbnailView;
-        public TextView titleView;
-        public TextView subtitleView;
+        public final DynamicHeightNetworkImageView thumbnailView;
+        public final TextView titleView;
+        public final TextView subtitleView;
 
         public ViewHolder(View view) {
             super(view);

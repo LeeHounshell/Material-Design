@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory
+    android:title="@string/title_font_settings">
+
+     <ListPreference     android:title="Font Style"
+                         android:summary="Select the font style to use"
+                         android:key="@string/font_name"
+                         android:defaultValue="@string/pref_default_font"
+                         android:entries="@array/fontListArray"
+                         android:entryValues="@array/fontListValues" />
+
+     <ListPreference     android:title="Font Size"
+                         android:summary="Select the font size to use"
+                         android:key="@string/font_size"
+                         android:defaultValue="@string/pref_default_size"
+                         android:entries="@array/fontSizeArray"
+                         android:entryValues="@array/fontSizeValues" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

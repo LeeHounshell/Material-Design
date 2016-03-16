@@ -7,7 +7,7 @@ import android.util.Log;
 
 import static com.harlie.xyzreader.data.ItemsProvider.Tables;
 
-public class ItemsDatabase extends SQLiteOpenHelper {
+class ItemsDatabase extends SQLiteOpenHelper {
     private final static String TAG = "LEE: <" + SQLiteOpenHelper.class.getSimpleName() + ">";
 
     private static final String DATABASE_NAME = "xyzreader.db";

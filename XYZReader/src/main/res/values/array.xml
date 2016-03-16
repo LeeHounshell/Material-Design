@@ -1,0 +1,44 @@
+<resources>
+    <string-array name="fontListArray">
+
+        <item>Rosario-Regular</item>
+        <item>Roboto-Black</item>
+        <item>Roboto-Bold</item>
+        <item>RobotoCondensed-Bold</item>
+        <item>RobotoCondensed-Light</item>
+        <item>RobotoCondensed-Regular</item>
+        <item>Roboto-Light</item>
+        <item>Roboto-Medium</item>
+        <item>Roboto-Regular</item>
+        <item>Roboto-Thin</item>
+
+    </string-array>
+
+    <string-array name="fontListValues">
+
+        <item>Rosario-Regular.ttf</item>
+        <item>Roboto-Black.ttf</item>
+        <item>Roboto-Bold.ttf</item>
+        <item>RobotoCondensed-Bold.ttf</item>
+        <item>RobotoCondensed-Light.ttf</item>
+        <item>RobotoCondensed-Regular.ttf</item>
+        <item>Roboto-Light.ttf</item>
+        <item>Roboto-Medium.ttf</item>
+        <item>Roboto-Regular.ttf</item>
+        <item>Roboto-Thin.ttf</item>
+
+    </string-array>
+
+    <string-array name="fontSizeArray">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="fontSizeValues">
+        <item>FontStyle.Small</item>
+        <item>FontStyle.Medium</item>
+        <item>FontStyle.Large</item>
+    </string-array>
+
+</resources>

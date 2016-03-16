@@ -51,6 +51,8 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_article_detail);
 
+        getTheme().applyStyle(new FontPreferences(this).getFontStyle().getResId(), true);
+
         getLoaderManager().initLoader(0, null, this);
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());

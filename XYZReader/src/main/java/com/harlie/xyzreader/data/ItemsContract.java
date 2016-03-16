@@ -7,7 +7,7 @@ public class ItemsContract {
     private final static String TAG = "LEE: <" + ItemsContract.class.getSimpleName() + ">";
 
     public static final String CONTENT_AUTHORITY = "com.harlie.xyzreader";
-    public static final Uri BASE_URI = Uri.parse("content://com.harlie.xyzreader");
+    private static final Uri BASE_URI = Uri.parse("content://com.harlie.xyzreader");
 
     interface ItemsColumns {
         /** Type: INTEGER PRIMARY KEY AUTOINCREMENT */

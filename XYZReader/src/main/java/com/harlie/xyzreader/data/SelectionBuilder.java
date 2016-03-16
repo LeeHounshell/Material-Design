@@ -22,15 +22,16 @@
 
 package com.harlie.xyzreader.data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Helper for building selection clauses for {@link SQLiteDatabase}. Each
@@ -44,24 +45,6 @@ public class SelectionBuilder {
     private HashMap<String, String> mProjectionMap;
     private StringBuilder mSelection;
     private ArrayList<String> mSelectionArgs;
-
-    /**
-     * Reset any internal state, allowing this builder to be recycled.
-     */
-    public SelectionBuilder reset() {
-        Log.v(TAG, "reset");
-        mTable = null;
-        if (mProjectionMap != null) {
-            mProjectionMap.clear();
-        }
-        if (mSelection != null) {
-            mSelection.setLength(0);
-        }
-        if (mSelectionArgs != null) {
-            mSelectionArgs.clear();
-        }
-        return this;
-    }
 
     /**
      * Append the given selection clause to the internal state. Each clause is
@@ -87,15 +70,13 @@ public class SelectionBuilder {
         mSelection.append("(").append(selection).append(")");
         if (selectionArgs != null) {
             ensureSelectionArgs();
-            for (String arg : selectionArgs) {
-                mSelectionArgs.add(arg);
-            }
+            Collections.addAll(mSelectionArgs, selectionArgs);
         }
 
         return this;
     }
 
-    public SelectionBuilder table(String table) {
+    public SelectionBuilder table(@SuppressWarnings("SameParameterValue") String table) {
         Log.v(TAG, "table");
         mTable = table;
         return this;
@@ -105,13 +86,6 @@ public class SelectionBuilder {
         Log.v(TAG, "assertTable");
         if (mTable == null) {
             throw new IllegalStateException("Table not specified");
-        }
-    }
-
-    private void ensureProjectionMap() {
-        Log.v(TAG, "ensureProjectionMap");
-        if (mProjectionMap == null) {
-            mProjectionMap = new HashMap<String, String>();
         }
     }
 
@@ -125,22 +99,8 @@ public class SelectionBuilder {
     private void ensureSelectionArgs() {
         Log.v(TAG, "ensureSelectionArgs");
         if (mSelectionArgs == null) {
-            mSelectionArgs = new ArrayList<String>();
+            mSelectionArgs = new ArrayList<>();
         }
-    }
-
-    public SelectionBuilder mapToTable(String column, String table) {
-        Log.v(TAG, "mapToTable");
-        ensureProjectionMap();
-        mProjectionMap.put(column, table + "." + column);
-        return this;
-    }
-
-    public SelectionBuilder map(String fromColumn, String toClause) {
-        Log.v(TAG, "map");
-        ensureProjectionMap();
-        mProjectionMap.put(fromColumn, toClause + " AS " + fromColumn);
-        return this;
     }
 
     /**
@@ -148,7 +108,7 @@ public class SelectionBuilder {
      *
      * @see #getSelectionArgs()
      */
-    public String getSelection() {
+    private String getSelection() {
         Log.v(TAG, "getSelection");
         if (mSelection != null) {
             return mSelection.toString();
@@ -162,7 +122,7 @@ public class SelectionBuilder {
      *
      * @see #getSelection()
      */
-    public String[] getSelectionArgs() {
+    private String[] getSelectionArgs() {
         Log.v(TAG, "getSelectionArgs");
         if (mSelectionArgs != null) {
             return mSelectionArgs.toArray(new String[mSelectionArgs.size()]);
@@ -200,8 +160,12 @@ public class SelectionBuilder {
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy,
-            String having, String orderBy, String limit) {
+    private Cursor query(SQLiteDatabase db,
+                         String[] columns,
+                         @SuppressWarnings("SameParameterValue") String groupBy,
+                         @SuppressWarnings("SameParameterValue") String having,
+                         String orderBy,
+                         @SuppressWarnings("SameParameterValue") String limit) {
         Log.v(TAG, "query");
         assertTable();
         if (columns != null) mapColumns(columns);

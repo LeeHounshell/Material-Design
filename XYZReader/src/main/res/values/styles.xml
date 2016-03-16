@@ -37,4 +37,29 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
+    <!-- from: http://stackoverflow.com/questions/4877153/android-application-wide-font-size-preference/12591991#12591991 -->
+    <style name="FontStyle">
+    </style>
+
+    <style name="FontStyle_Small">
+        <item name="font_small">10sp</item>
+        <item name="font_medium">14sp</item>
+        <item name="font_large">20sp</item>
+        <item name="font_xlarge">27sp</item>
+    </style>
+
+    <style name="FontStyle_Medium">
+        <item name="font_small">14sp</item>
+        <item name="font_medium">18sp</item>
+        <item name="font_large">24sp</item>
+        <item name="font_xlarge">31sp</item>
+    </style>
+
+    <style name="FontStyle_Large">
+        <item name="font_small">22sp</item>
+        <item name="font_medium">26sp</item>
+        <item name="font_large">32sp</item>
+        <item name="font_xlarge">39sp</item>
+    </style>
+
 </resources>

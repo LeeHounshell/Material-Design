@@ -3,7 +3,7 @@ package com.harlie.xyzreader.remote;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Config {
+class Config {
     public static final URL BASE_URL;
 
     static {

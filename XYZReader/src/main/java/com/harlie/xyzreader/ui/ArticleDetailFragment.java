@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -38,7 +39,7 @@ public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private final static String TAG = "LEE: <" + ArticleDetailFragment.class.getSimpleName() + ">";
 
-    public static final String ARG_ITEM_ID = "item_id";
+    private static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
 
     private Cursor mCursor;
@@ -88,7 +89,7 @@ public class ArticleDetailFragment extends Fragment implements
         setHasOptionsMenu(true);
     }
 
-    public ArticleDetailActivity getActivityCast() {
+    private ArticleDetailActivity getActivityCast() {
         Log.v(TAG, "getActivityCast");
         return (ArticleDetailActivity) getActivity();
     }
@@ -174,12 +175,12 @@ public class ArticleDetailFragment extends Fragment implements
         mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
     }
 
-    static float progress(float v, float min, float max) {
+    private static float progress(float v, float min, float max) {
         Log.v(TAG, "progress");
         return constrain((v - min) / (max - min), 0, 1);
     }
 
-    static float constrain(float val, float min, float max) {
+    private static float constrain(float val, @SuppressWarnings("SameParameterValue") float min, @SuppressWarnings("SameParameterValue") float max) {
         Log.v(TAG, "constrain");
         if (val < min) {
             return min;
@@ -200,7 +201,8 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+
+        setFontTypeAndSizes(titleView, bylineView, bodyView);
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -242,6 +244,35 @@ public class ArticleDetailFragment extends Fragment implements
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
         }
+    }
+
+    private void setFontTypeAndSizes(TextView titleView, TextView bylineView, TextView bodyView) {
+        Log.v(TAG, "setFontTypeAndSizes");
+        FontPreferences fontPreferences = new FontPreferences(getActivity());
+        String fontname = fontPreferences.getFontName();
+        String fontsize = fontPreferences.getFontSize();
+        Log.v(TAG, "--> USING FONT NAME="+fontname+", SIZE="+fontsize);
+        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), fontname));
+        getActivity().getTheme().applyStyle(fontPreferences.getFontStyle().getResId(), true);
+
+        int[] attrs = {R.attr.font_small, R.attr.font_medium, R.attr.font_large, R.attr.font_xlarge}; // The attributes to retrieve
+        TypedArray ta = getActivity().obtainStyledAttributes(fontPreferences.getFontStyle().getResId(), attrs);
+        String str;
+        //noinspection ResourceType
+        str = ta.getString(3);
+        float titleTextSize = Float.valueOf(str.substring(0, str.length()-2)); // discard the "sp" part of the style item
+        //noinspection ResourceType
+        str = ta.getString(0);
+        float bylineTextSize = Float.valueOf(str.substring(0, str.length()-2)); // discard the "sp" part of the style item
+        //noinspection ResourceType
+        str = ta.getString(1);
+        float bodyTextSize = Float.valueOf(str.substring(0, str.length()-2)); // discard the "sp" part of the style item
+        Log.v(TAG, "=========> titleTextSize="+titleTextSize+", bylineTextSize="+bylineTextSize+", bodyTextSize="+bodyTextSize);
+        ta.recycle();
+
+        titleView.setTextSize(titleTextSize);
+        bylineView.setTextSize(bylineTextSize);
+        bodyView.setTextSize(bodyTextSize);
     }
 
     @Override
