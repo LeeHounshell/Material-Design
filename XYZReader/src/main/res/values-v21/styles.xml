@@ -27,6 +27,10 @@
         <item name="android:windowBackground">@color/ltgray</item>
         <!-- v21 -->
         <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="AppTheme.List" parent="AppTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <!-- specify enter and exit transitions -->
         <!-- options are: explode, slide, fade -->
         <item name="android:windowEnterTransition">@transition/fancy</item>
@@ -34,10 +38,6 @@
         <!-- specify shared element transitions -->
         <item name="android:windowSharedElementEnterTransition">@transition/fancy</item>
         <item name="android:windowSharedElementExitTransition">@transition/fancy</item>
-    </style>
-
-    <style name="AppTheme.List" parent="AppTheme">
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.Detail" parent="AppTheme">
