@@ -110,6 +110,18 @@ public class ArticleDetailFragment extends Fragment implements
     public void onDestroy() {
         Log.v(TAG, "onDestroy");
         super.onDestroy();
+        if (mCursor != null) {
+            if (! mCursor.isClosed()) {
+                mCursor.close();
+            }
+            mCursor = null;
+        }
+        mRootView = null;
+        mScrollView = null;
+        mDrawInsetsFrameLayout = null;
+        mStatusBarColorDrawable = null;
+        mPhotoContainerView = null;
+        mPhotoView = null;
         xyzReaderApplication.getInstance().mustDie(this); // check that fragment does not leak
     }
 
@@ -226,9 +238,19 @@ public class ArticleDetailFragment extends Fragment implements
                             if (bitmap != null) {
                                 Palette p = Palette.generate(bitmap, 12);
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                mRootView.findViewById(R.id.meta_bar)
-                                        .setBackgroundColor(mMutedColor);
+                                try {
+                                    mPhotoView.setImageBitmap(imageContainer.getBitmap());
+                                }
+                                catch (NullPointerException e) {
+                                    Log.w(TAG, "unable to setImageBitmap - mPhotoView is null");
+                                }
+                                try {
+                                    mRootView.findViewById(R.id.meta_bar)
+                                            .setBackgroundColor(mMutedColor);
+                                }
+                                catch (NullPointerException e) {
+                                    Log.w(TAG, "unable to setBackgroundColor - mRootView is null");
+                                }
                                 updateStatusBar();
                             }
                         }
