@@ -19,16 +19,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/photo_placeholder">
+
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView
                     android:id="@+id/photo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                     />
+                    android:transitionName="@string/transition_thumbnail"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="112dp"
+                    android:layout_width="112dp"
+                    android:layout_height="0dp"
                     android:background="@drawable/photo_background_protection" />
 
             </FrameLayout>
@@ -74,6 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#8fff" />
+
                 </LinearLayout>
 
                 <TextView
@@ -90,7 +93,9 @@
                     android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
 
             </com.harlie.xyzreader.ui.MaxWidthLinearLayout>
+
         </FrameLayout>
+
     </com.harlie.xyzreader.ui.ObservableScrollView>
 
     <android.support.design.widget.FloatingActionButton

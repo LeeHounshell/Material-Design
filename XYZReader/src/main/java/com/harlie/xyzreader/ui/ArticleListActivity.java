@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -182,6 +183,11 @@ public class ArticleListActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(null);
     }
 
+    private AppCompatActivity getActivity() {
+        Log.v(TAG, "getActivity");
+        return this;
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private final String TAG = "LEE: <" + Adapter.class.getSimpleName() + ">";
 
@@ -203,13 +209,26 @@ public class ArticleListActivity extends AppCompatActivity implements
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Log.v(TAG, "onCreateViewHolder");
             View view = getLayoutInflater().inflate(R.layout.list_item_article, parent, false);
+            final View transitionView = view.findViewById(R.id.thumbnail);
+            final String transitionName;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                transitionName = transitionView.getTransitionName();
+            }
+            else {
+                transitionName = null;
+            }
             final ViewHolder vh = new ViewHolder(view);
+            final AppCompatActivity activity = getActivity();
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.v(TAG, "onClick");
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                    Log.v(TAG, "onClick - startActivity ArticleDetailActivity - transitionName="+transitionName);
+                    Bundle bundle = new Bundle();
+                    if (transitionName != null) {
+                        bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionView, transitionName).toBundle();
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                    startActivity(intent, bundle);
                 }
             });
             return vh;

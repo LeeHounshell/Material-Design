@@ -17,6 +17,7 @@
         <!--suppress AndroidLintContentDescription -->
         <com.harlie.xyzreader.ui.DynamicHeightNetworkImageView
             android:id="@+id/thumbnail"
+            android:transitionName="@string/transition_thumbnail"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@color/photo_placeholder" />
@@ -46,6 +47,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:ellipsize="end" />
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

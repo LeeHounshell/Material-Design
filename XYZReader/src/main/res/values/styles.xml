@@ -27,10 +27,10 @@
         <item name="toolbarStyle">@style/Toolbar</item>
     </style>
 
-    <style name="AppTheme.List" parent="@style/AppTheme">
+    <style name="AppTheme.List" parent="AppTheme">
     </style>
 
-    <style name="AppTheme.Detail" parent="@style/AppTheme">
+    <style name="AppTheme.Detail" parent="AppTheme">
     </style>
 
     <style name="Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
