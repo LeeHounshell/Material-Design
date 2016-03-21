@@ -251,7 +251,12 @@ public class ArticleDetailFragment extends Fragment implements
                                 catch (NullPointerException e) {
                                     Log.w(TAG, "unable to setBackgroundColor - mRootView is null");
                                 }
-                                updateStatusBar();
+                                try {
+                                    updateStatusBar();
+                                }
+                                catch (NullPointerException e) {
+                                    Log.w(TAG, "unable to updateStatusBar - null");
+                                }
                             }
                         }
 
