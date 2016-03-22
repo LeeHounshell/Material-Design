@@ -2,6 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/draw_insets_frame_layout"
+    android:layout_marginTop="@dimen/detail_body_top_margin"
+    android:layout_marginBottom="@dimen/detail_body_bottom_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,7 +28,7 @@
                     android:transitionName="@string/transition_thumbnail"
                     android:scaleType="centerCrop"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="@dimen/detail_photo_height" />
 
                 <View
                     android:layout_width="112dp"
