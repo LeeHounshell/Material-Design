@@ -107,25 +107,6 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     @Override
-    public void onDestroy() {
-        Log.v(TAG, "onDestroy");
-        super.onDestroy();
-        if (mCursor != null) {
-            if (! mCursor.isClosed()) {
-                mCursor.close();
-            }
-            mCursor = null;
-        }
-        mRootView = null;
-        mScrollView = null;
-        mDrawInsetsFrameLayout = null;
-        mStatusBarColorDrawable = null;
-        mPhotoContainerView = null;
-        mPhotoView = null;
-        xyzReaderApplication.getInstance().mustDie(this); // check that fragment does not leak
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         Log.v(TAG, "onCreateView");
