@@ -45,6 +45,14 @@ public class ArticleDetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            if (getIntent() != null && getIntent().getData() != null) {
+                mStartId = ItemsContract.Items.getItemId(getIntent().getData());
+                mSelectedItemId = mStartId;
+            }
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
@@ -110,12 +118,6 @@ public class ArticleDetailActivity extends AppCompatActivity
             });
         }
 
-        if (savedInstanceState == null) {
-            if (getIntent() != null && getIntent().getData() != null) {
-                mStartId = ItemsContract.Items.getItemId(getIntent().getData());
-                mSelectedItemId = mStartId;
-            }
-        }
     }
 
     @Override
