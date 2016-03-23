@@ -11,10 +11,12 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -28,7 +30,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
-import com.harlie.xyzreader.xyzReaderApplication;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -56,6 +57,9 @@ public class ArticleDetailFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
+    private String mTitle;
+    private Spanned mBody;
+    private String mImagePath;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -142,7 +146,8 @@ public class ArticleDetailFragment extends Fragment implements
                 Log.v(TAG, "onClick");
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText("Some sample text")
+                        .setSubject(mTitle)
+                        .setText(mBody)
                         .getIntent(), getString(R.string.action_share)));
             }
         });
@@ -201,7 +206,8 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            mTitle = mCursor.getString(ArticleLoader.Query.TITLE);
+            titleView.setText(mTitle);
             bylineView.setText(Html.fromHtml(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
@@ -210,9 +216,11 @@ public class ArticleDetailFragment extends Fragment implements
                             + " by <font color='#ffffff'>"
                             + mCursor.getString(ArticleLoader.Query.AUTHOR)
                             + "</font>"));
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
+            mBody = Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY));
+            bodyView.setText(mBody);
+            mImagePath = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
+                    .get(mImagePath, new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
