@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
+import com.harlie.xyzreader.util.BitmapUtility;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -42,6 +43,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     private static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
+    private static final String THE_POSTER_JPG = "the_poster.jpg";
 
     private Cursor mCursor;
     private long mItemId;
@@ -59,7 +61,7 @@ public class ArticleDetailFragment extends Fragment implements
     private int mStatusBarFullOpacityBottom;
     private String mTitle;
     private Spanned mBody;
-    private String mImagePath;
+    private Uri mImageUri;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -111,8 +113,8 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         Log.v(TAG, "onCreateView");
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
@@ -144,11 +146,15 @@ public class ArticleDetailFragment extends Fragment implements
             @Override
             public void onClick(View view) {
                 Log.v(TAG, "onClick");
-                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
-                        .setType("text/plain")
+                Intent intent = ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("image/*")
                         .setSubject(mTitle)
                         .setText(mBody)
-                        .getIntent(), getString(R.string.action_share)));
+                        .getIntent();
+                if (mImageUri != null) {
+                    intent.putExtra(Intent.EXTRA_STREAM, mImageUri);
+                }
+                startActivity(Intent.createChooser(intent, getString(R.string.action_share)));
             }
         });
 
@@ -218,13 +224,15 @@ public class ArticleDetailFragment extends Fragment implements
                             + "</font>"));
             mBody = Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY));
             bodyView.setText(mBody);
-            mImagePath = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
+            String imagePath = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mImagePath, new ImageLoader.ImageListener() {
+                    .get(imagePath, new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
                             if (bitmap != null) {
+                                mImageUri = BitmapUtility.getUriForFile(THE_POSTER_JPG);
+                                BitmapUtility.saveOneBitmapToFlash(bitmap, THE_POSTER_JPG);
                                 Palette p = Palette.generate(bitmap, 12);
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
                                 try {
