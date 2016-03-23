@@ -18,8 +18,8 @@
         <com.harlie.xyzreader.ui.DynamicHeightNetworkImageView
             android:id="@+id/thumbnail"
             android:transitionName="@string/transition_thumbnail"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/photo_placeholder" />
 
         <TextView
