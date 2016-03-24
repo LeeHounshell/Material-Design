@@ -31,7 +31,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Helper for building selection clauses for {@link SQLiteDatabase}. Each
@@ -42,7 +41,6 @@ public class SelectionBuilder {
     private final static String TAG = "LEE: <" + SelectionBuilder.class.getSimpleName() + ">";
 
     private String mTable = null;
-    private HashMap<String, String> mProjectionMap;
     private StringBuilder mSelection;
     private ArrayList<String> mSelectionArgs;
 
@@ -131,17 +129,6 @@ public class SelectionBuilder {
         }
     }
 
-    private void mapColumns(String[] columns) {
-        Log.v(TAG, "mapColumns");
-        if (mProjectionMap == null) return;
-        for (int i = 0; i < columns.length; i++) {
-            final String target = mProjectionMap.get(columns[i]);
-            if (target != null) {
-                columns[i] = target;
-            }
-        }
-    }
-
     @Override
     public String toString() {
         Log.v(TAG, "toString");
@@ -168,7 +155,6 @@ public class SelectionBuilder {
                          @SuppressWarnings("SameParameterValue") String limit) {
         Log.v(TAG, "query");
         assertTable();
-        if (columns != null) mapColumns(columns);
         return db.query(mTable, columns, getSelection(), getSelectionArgs(), groupBy, having,
                 orderBy, limit);
     }
