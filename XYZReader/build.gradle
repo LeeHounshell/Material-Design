@@ -76,6 +76,10 @@ android {
     }
 }
 
+configurations {
+    compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
+}
+
 dependencies {
     compile 'com.android.support:support-v13:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
