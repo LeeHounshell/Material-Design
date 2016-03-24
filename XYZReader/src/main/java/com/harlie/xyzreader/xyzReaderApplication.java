@@ -8,8 +8,11 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
+// NOTE: build uses 'preprocessor.gradle' here
+//#IFDEF 'debug'
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+//#ENDIF
 
 
 //from: http://www.androidhive.info/2015/08/android-integrating-google-analytics-v4/
@@ -19,14 +22,23 @@ public class xyzReaderApplication extends Application {
 
     private static Context sContext;
     private static xyzReaderApplication mInstance;
+
+    // NOTE: build uses 'preprocessor.gradle' here
+    //#IFDEF 'debug'
     private RefWatcher refWatcher;
+    //#ENDIF
 
     public void onCreate() {
         Log.v(TAG, "===> onCreate <===");
         xyzReaderApplication.mInstance = this;
         super.onCreate();
         xyzReaderApplication.sContext = getApplicationContext();
+
+        // NOTE: build uses 'preprocessor.gradle' here
+        //#IFDEF 'debug'
         refWatcher = LeakCanary.install(this);
+        //#ENDIF
+
         AnalyticsTrackers.initialize(this);
         AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
     }
@@ -100,13 +112,17 @@ public class xyzReaderApplication extends Application {
         t.send(new HitBuilders.EventBuilder().setCategory(category).setAction(action).setLabel(label).build());
     }
 
+    // --------------------------------------------------------------------------------
+    // NOTE: build uses 'preprocessor.gradle' here
+    //#IFDEF 'debug'
+
     public static RefWatcher getRefWatcher(Context context) {
         Log.v(TAG, "getRefWatcher");
         xyzReaderApplication application = (xyzReaderApplication) context.getApplicationContext();
         return application.refWatcher;
     }
 
-    // from: http://stackoverflow.com/questions/33654503/how-to-use-leak-canary
+    /* from: http://stackoverflow.com/questions/33654503/how-to-use-leak-canary */
     public void mustDie(Object object) {
         Log.v(TAG, "mustDie");
         if (refWatcher != null) {
@@ -114,5 +130,7 @@ public class xyzReaderApplication extends Application {
         }
     }
 
-}
+    //#ENDIF
+    // --------------------------------------------------------------------------------
 
+}
