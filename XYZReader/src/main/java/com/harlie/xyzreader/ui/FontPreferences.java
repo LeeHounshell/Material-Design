@@ -8,7 +8,7 @@ import com.harlie.xyzreader.R;
 
 //from: http://stackoverflow.com/questions/4877153/android-application-wide-font-size-preference/12591991#12591991
 class FontPreferences {
-    private final static String TAG = "LEE: <" + FontPreferences.class.getSimpleName() + ">";
+    //private final static String TAG = "LEE: <" + FontPreferences.class.getSimpleName() + ">";
 
     private final Context context;
 
@@ -22,6 +22,7 @@ class FontPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
+    @SuppressWarnings("unused")
     protected SharedPreferences.Editor edit() {
         //Log.v(TAG, "edit");
         return open().edit();

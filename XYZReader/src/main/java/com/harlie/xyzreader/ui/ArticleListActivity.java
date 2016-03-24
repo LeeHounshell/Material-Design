@@ -238,14 +238,15 @@ public class ArticleListActivity extends AppCompatActivity implements
         public void onBindViewHolder(ViewHolder holder, int position) {
             Log.v(TAG, "onBindViewHolder");
             mCursor.moveToPosition(position);
-            holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            holder.subtitleView.setText(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " " + getResources().getString(R.string.by) + " "
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR));
+            String title = mCursor.getString(ArticleLoader.Query.TITLE);
+            holder.titleView.setText(title);
+            String subtitle = DateUtils.getRelativeTimeSpanString(
+                    mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                    System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                    DateUtils.FORMAT_ABBREV_ALL).toString()
+                    + " " + getResources().getString(R.string.by) + " "
+                    + mCursor.getString(ArticleLoader.Query.AUTHOR);
+            holder.subtitleView.setText(subtitle);
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());

@@ -33,7 +33,7 @@
             android:name=".ui.ArticleDetailActivity"
             android:parentActivityName=".ui.ArticleListActivity"
             android:theme="@style/AppTheme.Detail">
-            <intent-filter>
+            <intent-filter tools:ignore="GoogleAppIndexingWarning">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
