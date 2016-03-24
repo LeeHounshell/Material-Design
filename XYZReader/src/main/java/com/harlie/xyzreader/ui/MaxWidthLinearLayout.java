@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
  * A simple {@link LinearLayout} subclass that has a maxWidth
  */
 public class MaxWidthLinearLayout extends LinearLayout {
-    private final static String TAG = "LEE: <" + MaxWidthLinearLayout.class.getSimpleName() + ">";
+    //private final static String TAG = "LEE: <" + MaxWidthLinearLayout.class.getSimpleName() + ">";
 
     private static final int[] ATTRS = {
             android.R.attr.maxWidth
@@ -36,24 +36,24 @@ public class MaxWidthLinearLayout extends LinearLayout {
 
     public MaxWidthLinearLayout(Context context) {
         super(context);
-        Log.v(TAG, "MaxWidthLinearLayout");
+        //Log.v(TAG, "MaxWidthLinearLayout");
         init(context, null, 0, 0);
     }
 
     public MaxWidthLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.v(TAG, "MaxWidthLinearLayout");
+        //Log.v(TAG, "MaxWidthLinearLayout");
         init(context, attrs, 0, 0);
     }
 
     public MaxWidthLinearLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        Log.v(TAG, "MaxWidthLinearLayout");
+        //Log.v(TAG, "MaxWidthLinearLayout");
         init(context, attrs, defStyle, 0);
     }
 
     private void init(Context context, AttributeSet attrs, @SuppressWarnings("UnusedParameters") int defStyleAttr, @SuppressWarnings({"UnusedParameters", "SameParameterValue"}) int defStyleRes) {
-        Log.v(TAG, "init");
+        //Log.v(TAG, "init");
         TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
         mMaxWidth = a.getLayoutDimension(0, Integer.MAX_VALUE);
         a.recycle();
@@ -61,7 +61,7 @@ public class MaxWidthLinearLayout extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.v(TAG, "onMeasure");
+        //Log.v(TAG, "onMeasure");
         int newSpecWidth = Math.min(MeasureSpec.getSize(widthMeasureSpec), mMaxWidth);
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(newSpecWidth, MeasureSpec.getMode(widthMeasureSpec));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

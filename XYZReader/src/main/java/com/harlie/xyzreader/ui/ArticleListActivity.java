@@ -200,7 +200,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         @Override
         public long getItemId(int position) {
-            Log.v(TAG, "getItemId");
+            //Log.v(TAG, "getItemId");
             mCursor.moveToPosition(position);
             return mCursor.getLong(ArticleLoader.Query._ID);
         }
@@ -255,7 +255,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         @Override
         public int getItemCount() {
-            Log.v(TAG, "getItemCount");
+            //Log.v(TAG, "getItemCount");
             return mCursor.getCount();
         }
     }

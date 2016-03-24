@@ -25,18 +25,18 @@ import android.widget.ScrollView;
  * A custom ScrollView that can accept a scroll listener.
  */
 public class ObservableScrollView extends ScrollView {
-    private final static String TAG = "LEE: <" + ObservableScrollView.class.getSimpleName() + ">";
+    //private final static String TAG = "LEE: <" + ObservableScrollView.class.getSimpleName() + ">";
 
     private Callbacks mCallbacks;
 
     public ObservableScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.v(TAG, "ObservableScrollView");
+        //Log.v(TAG, "ObservableScrollView");
     }
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        Log.v(TAG, "onScrollChanged");
+        //Log.v(TAG, "onScrollChanged");
         super.onScrollChanged(l, t, oldl, oldt);
         if (mCallbacks != null) {
             mCallbacks.onScrollChanged();
@@ -45,7 +45,7 @@ public class ObservableScrollView extends ScrollView {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.v(TAG, "onLayout");
+        //Log.v(TAG, "onLayout");
         super.onLayout(changed, l, t, r, b);
         int scrollY = getScrollY();
         // hack to call onScrollChanged on screen rotate
@@ -56,12 +56,12 @@ public class ObservableScrollView extends ScrollView {
 
     @Override
     public int computeVerticalScrollRange() {
-        Log.v(TAG, "computeVerticalScrollRange");
+        //Log.v(TAG, "computeVerticalScrollRange");
         return super.computeVerticalScrollRange();
     }
 
     public void setCallbacks(Callbacks listener) {
-        Log.v(TAG, "setCallbacks");
+        //Log.v(TAG, "setCallbacks");
         mCallbacks = listener;
     }
 
