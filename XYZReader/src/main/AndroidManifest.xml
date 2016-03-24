@@ -11,6 +11,7 @@
     <application
         android:name=".xyzReaderApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/mybackupscheme"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light"
         android:icon="@mipmap/ic_launcher"
