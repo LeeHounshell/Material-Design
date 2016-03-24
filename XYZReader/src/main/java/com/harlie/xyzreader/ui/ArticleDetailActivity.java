@@ -97,7 +97,7 @@ public class ArticleDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Log.v(TAG, "onClick");
-                onSupportNavigateUp();
+                onBackPressed();
             }
         });
 
@@ -207,4 +207,5 @@ public class ArticleDetailActivity extends AppCompatActivity
             return (mCursor != null) ? mCursor.getCount() : 0;
         }
     }
+
 }
