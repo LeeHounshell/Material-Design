@@ -17,7 +17,7 @@
         <!--suppress AndroidLintContentDescription -->
         <com.harlie.xyzreader.ui.DynamicHeightNetworkImageView
             android:id="@+id/thumbnail"
-            android:transitionName="@string/transition_thumbnail"
+            style="@style/ImageTransition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/photo_placeholder" />

@@ -32,8 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="136dp"
         android:background="@color/primary"
-        android:fitsSystemWindows="true"
-        android:elevation="@dimen/toolbar_elevation">
+        android:fitsSystemWindows="true" >
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
@@ -61,7 +60,6 @@
                 app:theme="@style/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:contentInsetStart="72dp"
                 app:contentInsetStart="72dp"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 app:layout_collapseMode="pin">

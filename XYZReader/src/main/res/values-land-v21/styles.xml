@@ -1,14 +1,16 @@
 <resources>
 
+    <style name="ArticleDetail" parent="AppTheme">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
     <style name="DetailImage" parent="AppTheme">
+        <item name="android:transitionName">@string/transition_thumbnail</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:gravity">top|center_horizontal</item>
         <item name="android:layout_gravity">top|center_horizontal</item>
         <item name="android:background">@color/primary_dark</item>
-    </style>
-
-    <style name="ArticleDetail" parent="AppTheme">
-        <item name="android:background">@android:color/white</item>
     </style>
 
 </resources>

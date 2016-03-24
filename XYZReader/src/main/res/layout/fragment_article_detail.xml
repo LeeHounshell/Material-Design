@@ -28,8 +28,7 @@
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView
                     android:id="@+id/photo"
-                    android:transitionName="@string/transition_thumbnail"
-                    style="@style/Thumbnail"
+                    style="@style/DetailImage"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />
 
@@ -40,9 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                style="@style/ArticleDetail"
                 android:maxWidth="@dimen/detail_card_max_width"
-                android:background="#fff"
-                android:elevation="2dp"
                 android:layout_marginTop="@dimen/detail_card_top_margin">
 
                 <LinearLayout
@@ -59,22 +57,23 @@
 
                     <TextView
                         android:id="@+id/article_title"
-                        style="?android:attr/textAppearanceLarge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
                         android:fontFamily="sans-serif-condensed"
-                        android:textColor="#fff"
+                        android:textColor="@android:color/white"
                         android:textStyle="bold"
                         android:textSize="@dimen/detail_title_text_size"
                         android:lineSpacingMultiplier="0.9" />
 
                     <TextView
                         android:id="@+id/article_byline"
-                        style="?android:attr/textAppearanceSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#8fff" />
+                        android:fontFamily="sans-serif-condensed"
+                        android:textColor="@android:color/white"
+                        android:textStyle="normal"
+                        android:textSize="@dimen/detail_byline_text_size" />
 
                 </LinearLayout>
 
@@ -103,7 +102,7 @@
         app:fabSize="normal"
         app:elevation="@dimen/fab_elevation"
         app:pressedTranslationZ="@dimen/fab_press_translation_z"
-        android:stateListAnimator="@anim/fab_state_list_anim"
+        style="@style/FloatingActionButton"
         android:background="@drawable/add_fab_background"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="@dimen/fab_margin"

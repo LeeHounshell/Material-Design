@@ -24,4 +24,5 @@
     <color name="secondary_text">#727272</color>
 
     <color name="photo_placeholder">#ccc</color>
+    <color name="transparent">#aaffffff</color>
 </resources>

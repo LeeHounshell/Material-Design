@@ -37,6 +37,10 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
+    <style name="AppBarLayout" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
     <!-- from: http://stackoverflow.com/questions/4877153/android-application-wide-font-size-preference/12591991#12591991 -->
     <style name="FontStyle">
     </style>
@@ -62,11 +66,21 @@
         <item name="font_xlarge">39sp</item>
     </style>
 
-    <style name="Thumbnail">
+    <style name="DetailImage" parent="AppTheme">
         <item name="android:scaleType">fitStart</item>
         <item name="android:gravity">top|center_horizontal</item>
         <item name="android:layout_gravity">top|center_horizontal</item>
         <item name="android:background">@color/primary_dark</item>
+    </style>
+
+    <style name="ArticleDetail" parent="AppTheme">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="ImageTransition" parent="AppTheme">
+    </style>
+
+    <style name="FloatingActionButton" parent="AppTheme">
     </style>
 
 </resources>
