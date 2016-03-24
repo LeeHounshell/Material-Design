@@ -9,9 +9,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.text.format.Time;
 import android.util.Log;
 
+import com.google.api.client.util.DateTime;
 import com.harlie.xyzreader.remote.RemoteEndpointUtil;
 
 import org.json.JSONArray;
@@ -36,7 +36,6 @@ public class UpdaterService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.v(TAG, "onHandleIntent");
-        Time time = new Time();
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -72,8 +71,8 @@ public class UpdaterService extends IntentService {
                 values.put(ItemsContract.Items.THUMB_URL, object.getString("thumb" ));
                 values.put(ItemsContract.Items.PHOTO_URL, object.getString("photo" ));
                 values.put(ItemsContract.Items.ASPECT_RATIO, object.getString("aspect_ratio" ));
-                time.parse3339(object.getString("published_date"));
-                values.put(ItemsContract.Items.PUBLISHED_DATE, time.toMillis(false));
+                DateTime.parseRfc3339(object.getString("published_date"));
+                values.put(ItemsContract.Items.PUBLISHED_DATE, System.currentTimeMillis());
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
             }
 
