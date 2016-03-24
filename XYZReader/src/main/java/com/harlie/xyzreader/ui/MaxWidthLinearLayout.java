@@ -52,7 +52,7 @@ public class MaxWidthLinearLayout extends LinearLayout {
         init(context, attrs, defStyle, 0);
     }
 
-    private void init(Context context, AttributeSet attrs, @SuppressWarnings("UnusedParameters") int defStyleAttr, @SuppressWarnings("UnusedParameters") int defStyleRes) {
+    private void init(Context context, AttributeSet attrs, @SuppressWarnings("UnusedParameters") int defStyleAttr, @SuppressWarnings({"UnusedParameters", "SameParameterValue"}) int defStyleRes) {
         Log.v(TAG, "init");
         TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
         mMaxWidth = a.getLayoutDimension(0, Integer.MAX_VALUE);

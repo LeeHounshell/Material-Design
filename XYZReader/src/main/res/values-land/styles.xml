@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="Thumbnail">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:gravity">top|center_horizontal</item>
+        <item name="android:layout_gravity">top|center_horizontal</item>
+        <item name="android:background">@color/primary_dark</item>
+    </style>
+
+</resources>

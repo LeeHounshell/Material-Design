@@ -16,6 +16,7 @@ import java.io.IOException;
 
 
 class BitmapUtilityException extends Exception {
+    @SuppressWarnings("unused")
     public BitmapUtilityException(String detailMessage) {
         super(detailMessage);
     }
@@ -27,6 +28,7 @@ public class BitmapUtility {
     private final static String TAG = "LEE: <" + BitmapUtility.class.getSimpleName() + ">";
 
     // convert from bitmap to byte array
+    @SuppressWarnings("WeakerAccess")
     public static byte[] getBytes(Bitmap bitmap) {
         if (bitmap == null) {
             return null;
@@ -38,16 +40,18 @@ public class BitmapUtility {
     }
 
     // convert from bitmap to byte array - but only if larger than minImageSize
+    @SuppressWarnings("unused")
     public static byte[] getBytes(Bitmap theBitmap, int minImageSize) {
         if (theBitmap == null || theBitmap.getWidth() <= minImageSize || theBitmap.getHeight() <= minImageSize || theBitmap.getByteCount() <= minImageSize) {
             Log.v(TAG, "getBytes: ==> FAIL because of INVALID IMAGE!");
             return null;
         }
-        byte[] image = BitmapUtility.getBytes(theBitmap);
+        @SuppressWarnings("UnnecessaryLocalVariable") byte[] image = BitmapUtility.getBytes(theBitmap);
         return image;
     }
 
     // convert from byte array to bitmap
+    @SuppressWarnings("unused")
     public static Bitmap getImage(byte[] image) {
         if (image == null || image.length == 0) {
             return null;
@@ -55,13 +59,15 @@ public class BitmapUtility {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static String getPathForSharedStorage() {
-        String storage = Environment.getExternalStorageDirectory().toString();
+        @SuppressWarnings("UnnecessaryLocalVariable") String storage = Environment.getExternalStorageDirectory().toString();
         //String storage = "/storage/emulated/0/"; // this is what my device is seeing for above call
         //String storage = "/sdcard"; // because gmail can't read it, as the file must be in a 'sharable' location
         return storage;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static String getPathForFile(final String filename) {
         return (getPathForSharedStorage() + File.separator + filename);
     }
@@ -74,7 +80,8 @@ public class BitmapUtility {
     }
 
     // instead of placing the Bitmap into a Parcelable.. (no room) we save to disk and load it back
-    public static Uri saveOneBitmapToFlash(final Bitmap poster, final String filename) {
+    @SuppressWarnings("UnusedReturnValue")
+    public static Uri saveOneBitmapToFlash(final Bitmap poster, @SuppressWarnings("SameParameterValue") final String filename) {
         Log.v(TAG, "saveOneBitmapToFlash(final Bitmap poster, final String filename=" + filename + ")");
         Uri theBitmapSaveUri = null;
         if (poster != null && filename != null) {
@@ -88,6 +95,7 @@ public class BitmapUtility {
                     poster.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                     File f = new File(Environment.getExternalStorageDirectory() + File.separator + filename);
                     try {
+                        //noinspection ResultOfMethodCallIgnored
                         f.createNewFile();
                         FileOutputStream fo = new FileOutputStream(f);
                         fo.write(bytes.toByteArray());
@@ -115,6 +123,7 @@ public class BitmapUtility {
     /*
      * From: http://stackoverflow.com/questions/16804404/create-a-bitmap-drawable-from-file-path
      */
+    @SuppressWarnings("unused")
     public static Bitmap readOneBitmapFromFlash(final String filename, int width, int height) throws BitmapUtilityException {
         Log.v(TAG, "readOneBitmapFromFlash(final String filename=" + filename + ", int width=" + width + ", int height=" + height + ")");
         Bitmap bitmap = null;
@@ -142,8 +151,9 @@ public class BitmapUtility {
     }
 
     // from: http://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
+    @SuppressWarnings("unused")
     public static Bitmap drawableToBitmap(Drawable drawable) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;

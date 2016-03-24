@@ -233,7 +233,7 @@ public class ArticleDetailFragment extends Fragment implements
                             if (bitmap != null) {
                                 mImageUri = BitmapUtility.getUriForFile(THE_POSTER_JPG);
                                 BitmapUtility.saveOneBitmapToFlash(bitmap, THE_POSTER_JPG);
-                                Palette p = Palette.generate(bitmap, 12);
+                                Palette p = new Palette.Builder(bitmap).generate();
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
                                 try {
                                     mPhotoView.setImageBitmap(imageContainer.getBitmap());
