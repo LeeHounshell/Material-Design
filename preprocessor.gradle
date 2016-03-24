@@ -59,6 +59,7 @@ class PreProcessor {
         String elseRegex = '^([ ]*)(\\/\\/)#ELSE$'
         String endifRegex = '^([ ]*)(\\/\\/)#ENDIF$'
         String lineRegex = '^([ ]*)([^ ][^ ])(.*)$'
+        String singleCharLineRegex = '^([ ]*)([^ ])$'
         String comment = "//"
         String newline = System.getProperty("line.separator")
  
@@ -128,6 +129,14 @@ class PreProcessor {
                             def matcher = line =~ lineRegex
                             if (!matcher[0][2].equals(comment)) {
                                 line = matcher[0][1] + comment + matcher[0][2] + matcher[0][3]
+                                changed = true
+                                println(line)
+                            }
+                        }
+                        else if (line.matches(singleCharLineRegex)) {
+                            def matcher = line =~ singleCharLineRegex
+                            if (!matcher[0][2].equals(comment)) {
+                                line = matcher[0][1] + comment + matcher[0][2]
                                 changed = true
                                 println(line)
                             }
