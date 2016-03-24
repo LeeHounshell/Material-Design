@@ -5,33 +5,35 @@
     android:layout_marginTop="@dimen/detail_body_top_margin"
     android:layout_marginBottom="@dimen/detail_body_bottom_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <com.harlie.xyzreader.ui.ObservableScrollView
         android:id="@+id/scrollview"
         android:background="@color/primary_dark"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/photo_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="top|center_horizontal"
+                android:layout_gravity="top|center_horizontal"
                 android:background="@color/photo_placeholder">
 
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView
                     android:id="@+id/photo"
                     android:transitionName="@string/transition_thumbnail"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/detail_photo_height" />
+                    style="@style/Thumbnail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
 
-            </FrameLayout>
+            </LinearLayout>
 
             <com.harlie.xyzreader.ui.MaxWidthLinearLayout
                 android:orientation="vertical"
