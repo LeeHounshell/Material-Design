@@ -10,8 +10,8 @@ import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 // NOTE: build uses 'preprocessor.gradle' here
 //#IFDEF 'debug'
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
+//import com.squareup.leakcanary.LeakCanary;
+//import com.squareup.leakcanary.RefWatcher;
 //#ENDIF
 
 
@@ -25,7 +25,7 @@ public class xyzReaderApplication extends Application {
 
     // NOTE: build uses 'preprocessor.gradle' here
     //#IFDEF 'debug'
-    private RefWatcher refWatcher;
+    //private RefWatcher refWatcher;
     //#ENDIF
 
     public void onCreate() {
@@ -36,7 +36,7 @@ public class xyzReaderApplication extends Application {
 
         // NOTE: build uses 'preprocessor.gradle' here
         //#IFDEF 'debug'
-        refWatcher = LeakCanary.install(this);
+        //refWatcher = LeakCanary.install(this);
         //#ENDIF
 
         AnalyticsTrackers.initialize(this);
@@ -116,19 +116,19 @@ public class xyzReaderApplication extends Application {
     // NOTE: build uses 'preprocessor.gradle' here
     //#IFDEF 'debug'
 
-    public static RefWatcher getRefWatcher(Context context) {
-        Log.v(TAG, "getRefWatcher");
-        xyzReaderApplication application = (xyzReaderApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
+    //public static RefWatcher getRefWatcher(Context context) {
+        //Log.v(TAG, "getRefWatcher");
+        //xyzReaderApplication application = (xyzReaderApplication) context.getApplicationContext();
+        //return application.refWatcher;
+    //}
 
-    /* from: http://stackoverflow.com/questions/33654503/how-to-use-leak-canary */
-    public void mustDie(Object object) {
-        Log.v(TAG, "mustDie");
-        if (refWatcher != null) {
-            refWatcher.watch(object);
-        }
-    }
+    ///* from: http://stackoverflow.com/questions/33654503/how-to-use-leak-canary */
+    //public void mustDie(Object object) {
+        //Log.v(TAG, "mustDie");
+        //if (refWatcher != null) {
+            //refWatcher.watch(object);
+        //}
+    //}
 
     //#ENDIF
     // --------------------------------------------------------------------------------

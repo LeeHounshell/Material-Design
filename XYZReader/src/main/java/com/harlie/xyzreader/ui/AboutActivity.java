@@ -148,7 +148,7 @@ public class AboutActivity extends AppCompatActivity {
 
         // NOTE: build uses 'preprocessor.gradle' here
         //#IFDEF 'debug'
-        xyzReaderApplication.getInstance().mustDie(this);
+        //xyzReaderApplication.getInstance().mustDie(this);
         //#ENDIF
     }
 

@@ -136,7 +136,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         // NOTE: build uses 'preprocessor.gradle' here
         //#IFDEF 'debug'
-        xyzReaderApplication.getInstance().mustDie(this);
+        //xyzReaderApplication.getInstance().mustDie(this);
         //#ENDIF
     }
 
