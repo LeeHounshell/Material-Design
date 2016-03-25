@@ -1,31 +1,31 @@
 <resources>
     <string-array name="fontListArray">
 
-        <item>Rosario-Regular</item>
+        <item>Roboto-Regular</item>
         <item>Roboto-Black</item>
+        <item>Roboto-Medium</item>
+        <item>Roboto-Light</item>
+        <item>Roboto-Thin</item>
         <item>Roboto-Bold</item>
+        <item>RobotoCondensed-Regular</item>
         <item>RobotoCondensed-Bold</item>
         <item>RobotoCondensed-Light</item>
-        <item>RobotoCondensed-Regular</item>
-        <item>Roboto-Light</item>
-        <item>Roboto-Medium</item>
-        <item>Roboto-Regular</item>
-        <item>Roboto-Thin</item>
+        <item>Rosario-Regular</item>
 
     </string-array>
 
     <string-array name="fontListValues">
 
-        <item>Rosario-Regular.ttf</item>
+        <item>Roboto-Regular.ttf</item>
         <item>Roboto-Black.ttf</item>
+        <item>Roboto-Medium.ttf</item>
+        <item>Roboto-Light.ttf</item>
+        <item>Roboto-Thin.ttf</item>
         <item>Roboto-Bold.ttf</item>
+        <item>RobotoCondensed-Regular.ttf</item>
         <item>RobotoCondensed-Bold.ttf</item>
         <item>RobotoCondensed-Light.ttf</item>
-        <item>RobotoCondensed-Regular.ttf</item>
-        <item>Roboto-Light.ttf</item>
-        <item>Roboto-Medium.ttf</item>
-        <item>Roboto-Regular.ttf</item>
-        <item>Roboto-Thin.ttf</item>
+        <item>Rosario-Regular.ttf</item>
 
     </string-array>
 

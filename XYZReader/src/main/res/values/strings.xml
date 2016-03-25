@@ -9,7 +9,7 @@
     <string name="action_share">Share</string>
     <string name="font_name">FontName</string>
     <string name="font_size">FontSize</string>
-    <string name="pref_default_font">Rosario-Regular.ttf</string>
+    <string name="pref_default_font">Roboto-Regular.ttf</string>
     <string name="pref_default_size">FontStyle.Medium</string>
     <string name="up">Up</string>
     <string name="by">by</string>
