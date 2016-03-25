@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,20 @@ public class AboutActivity extends AppCompatActivity {
     private final static String TAG = "LEE: <" + AboutActivity.class.getSimpleName() + ">";
 
     private int mTopInset;
+    private View mUpButton;
+
+    // NOTE: normally I would not over-ride onBackPressed like this.
+    // because I am using Transitions, if the screen is rotated before transitioning back to ArticleListActivity
+    // then the Toolbar is somehow destroyed. I'm not sure why. But if I run the Activity directly then it works ok.
+    @Override
+    public void onBackPressed() {
+        Log.v(TAG, "onBackPressed");
+        //super.onBackPressed();
+        String transitionName = "fancy";
+        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mUpButton, transitionName).toBundle();
+        Intent intent = new Intent(this, ArticleListActivity.class);
+        startActivity(intent, bundle);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +109,9 @@ public class AboutActivity extends AppCompatActivity {
 
         final View upButtonContainer = findViewById(R.id.up_container);
 
-        View upButton = findViewById(R.id.action_up);
-        if (upButton != null) {
-            upButton.setOnClickListener(new View.OnClickListener() {
+        mUpButton = findViewById(R.id.action_up);
+        if (mUpButton != null) {
+            mUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.v(TAG, "onClick");
@@ -128,6 +143,8 @@ public class AboutActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.v(TAG, "onDestroy");
         super.onDestroy();
+
+        mUpButton = null;
 
         // NOTE: build uses 'preprocessor.gradle' here
         //#IFDEF 'debug'

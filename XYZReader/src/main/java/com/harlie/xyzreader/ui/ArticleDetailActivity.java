@@ -3,12 +3,14 @@ package com.harlie.xyzreader.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,6 +42,19 @@ public class ArticleDetailActivity extends AppCompatActivity
     private MyPagerAdapter mPagerAdapter;
     private View mUpButtonContainer;
     private View mUpButton;
+
+    // NOTE: normally I would not over-ride onBackPressed like this.
+    // because I am using Transitions, if the screen is rotated before transitioning back to ArticleListActivity
+    // then the Toolbar is somehow destroyed. I'm not sure why. But if I run the Activity directly then it works ok.
+    @Override
+    public void onBackPressed() {
+        Log.v(TAG, "onBackPressed");
+        //super.onBackPressed();
+        String transitionName = "fancy";
+        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mUpButton, transitionName).toBundle();
+        Intent intent = new Intent(this, ArticleListActivity.class);
+        startActivity(intent, bundle);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
