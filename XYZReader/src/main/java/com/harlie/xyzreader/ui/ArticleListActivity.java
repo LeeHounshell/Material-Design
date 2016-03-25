@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -26,10 +27,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.harlie.xyzreader.R;
+// NOTE: build uses 'preprocessor.gradle' here
+//#IFDEF 'free'
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+//#ENDIF
+
 import com.harlie.xyzreader.data.ArticleLoader;
 import com.harlie.xyzreader.data.ItemsContract;
 import com.harlie.xyzreader.data.UpdaterService;
+import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.xyzReaderApplication;
 
 /**
@@ -44,6 +51,10 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+
+    //#IFDEF 'free'
+    private AdView mAdView;
+    //#ENDIF
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +83,65 @@ public class ArticleListActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             refresh();
         }
+
+        // NOTE: build uses 'preprocessor.gradle' here
+        //#IFDEF 'free'
+        mAdView = (AdView) findViewById(R.id.adView);
+        if (mAdView != null) {
+            AdRequest adRequest = getAdRequest();
+            mAdView.loadAd(adRequest);
+            xyzReaderApplication.getInstance().trackEvent("xyzReader", "adMob", "loadAd");
+        }
+        else {
+            Log.w(TAG, "mAdView is null!");
+        }
+        //#ENDIF
+    }
+
+    //---------------------------------------------------------------------------------------------------------
+    // IMPORTANT NOTE: the following #IFDEF #ELSE and #ENDIF directives are processed in build.gradle prior to javac
+    //                 CODE IN THIS BLOCK DEPENDS ON BUILD_TYPE 'release' AND IS EDITED BY THE CUSTOM GRADLE BUILD
+    //---------------------------------------------------------------------------------------------------------
+    //#IFDEF 'free'
+    @NonNull
+    private AdRequest getAdRequest() {
+        Log.d(TAG, "--> preparing an AdRequest");
+
+        Log.d(TAG, "--> using the TESTING version of AdRequest <--");
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice(getResources().getString(R.string.test_device))
+                .build();
+        xyzReaderApplication.getInstance().trackEvent("adMob", "AdRequest", "TESTING");
+
+        Log.d(TAG, "--> returning the AdRequest");
+        return adRequest;
+    }
+    //#ENDIF
+    //---------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void onResume() {
+        Log.v(TAG, "onResume");
+        super.onResume();
+        // Resume the AdView.
+        //#IFDEF 'free'
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+        //#ENDIF
+    }
+
+    @Override
+    public void onPause() {
+        Log.v(TAG, "onPause");
+        // Pause the AdView.
+        //#IFDEF 'free'
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        //#ENDIF
+        super.onPause();
     }
 
     //from: http://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
@@ -130,6 +200,11 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onDestroy() {
         Log.v(TAG, "onDestroy");
         super.onDestroy();
+
+        // NOTE: build uses 'preprocessor.gradle' here
+        //#IFDEF 'free'
+        mAdView = null;
+        //#ENDIF
 
         mSwipeRefreshLayout = null;
         mRecyclerView = null;

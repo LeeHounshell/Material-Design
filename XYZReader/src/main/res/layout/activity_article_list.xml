@@ -31,5 +31,7 @@
 
     <include layout="@layout/app_toolbar" />
 
+    <include layout="@layout/banner_advert" />
+
 </android.support.design.widget.CoordinatorLayout>
 

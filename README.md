@@ -9,7 +9,7 @@ And this is the xyzReader RSS reader assignment for the Material-Design course.
 
 This project implements a RSS feed viewer app that is modified for material design and multiple 'flavors.'
 
-Functionally, this project takes a working app (with poor presentation) and gives it a material design face-lift.
+Functionally, this project takes a mostly working app (with poor presentation) and gives it a material design face-lift.
 This project replicates a common developer task of updating and changing an app's desgn as new standards are released.
 
 
@@ -19,12 +19,15 @@ This project replicates a common developer task of updating and changing an app'
  * CoordinatorLayout + AppBarLayout + CollapsingToolbar
  * Floating Action Button
  * Custom Styling featuring separation of interface into surfaces
- * Effective use of transitions and motion
+ * Effective use of activity transitions and motion
+ * Use of full-bleed quality images
+ * Settings font selection and font size choices
  * Lint-Free Code
- * Free and Paid versions
  * A Gradle build 'preprocessor' which permits #IFDEF 'flavor' and #IFDEF 'buildType' in Android Java code
+ * Free and Paid versions
+ * AdMob for Free build
  * Google Analytics tracking
- * Memory Leak Detection
+ * Memory leak detection for Debug build
 
 
 ---
@@ -33,6 +36,8 @@ SCREENSHOTS
 
 
 ![screen](../master/screens/Phone-screenshot1.png)
+
+![screen](../master/screens/Tablet-screenshot1.png)
 
 
 ## License

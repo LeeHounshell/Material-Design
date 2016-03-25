@@ -28,10 +28,14 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
 import com.harlie.xyzreader.util.BitmapUtility;
-import com.harlie.xyzreader.xyzReaderApplication;
+import com.harlie.xyzreader.R;
+
+// NOTE: build uses 'preprocessor.gradle' here
+//#IFDEF 'debug'
+//import com.harlie.xyzreader.xyzReaderApplication;
+//#ENDIF
 
 /**
  * A fragment representing a single Article detail screen. This fragment is

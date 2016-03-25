@@ -20,10 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 
-import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
 import com.harlie.xyzreader.data.ItemsContract;
-import com.harlie.xyzreader.xyzReaderApplication;
+import com.harlie.xyzreader.R;
+
+// NOTE: build uses 'preprocessor.gradle' here
+//#IFDEF 'debug'
+//import com.harlie.xyzreader.xyzReaderApplication;
+//#ENDIF
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.

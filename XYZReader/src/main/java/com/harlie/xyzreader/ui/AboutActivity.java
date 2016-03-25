@@ -18,7 +18,11 @@ import android.view.WindowInsets;
 import android.widget.ImageView;
 
 import com.harlie.xyzreader.R;
-import com.harlie.xyzreader.xyzReaderApplication;
+
+// NOTE: build uses 'preprocessor.gradle' here
+//#IFDEF 'debug'
+//import com.harlie.xyzreader.xyzReaderApplication;
+//#ENDIF
 
 public class AboutActivity extends AppCompatActivity {
     private final static String TAG = "LEE: <" + AboutActivity.class.getSimpleName() + ">";

@@ -59,7 +59,7 @@
     </style>
 
     <style name="ListCardView" parent="AppTheme">
-        <item name="android:elevation">4dp</item>
+        <item name="android:elevation">@dimen/std_elevation</item>
         <item name="android:layout_marginLeft">@dimen/card_side_margin</item>
         <item name="android:layout_marginRight">@dimen/card_side_margin</item>
         <item name="android:layout_marginTop">@dimen/card_vert_margin</item>
@@ -67,20 +67,24 @@
     </style>
 
     <style name="DrawInsetsFrameLayout" parent="AppTheme">
-        <item name="android:elevation">4dp</item>
+        <item name="android:elevation">@dimen/std_elevation</item>
         <item name="android:layout_marginTop">@dimen/detail_body_top_margin</item>
         <item name="android:layout_marginBottom">@dimen/detail_body_bottom_margin</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
     </style>
 
+    <style name="AdMob" parent="AppTheme">
+        <item name="android:elevation">@dimen/admob_elevation</item>
+    </style>
+
     <style name="ArticleDetail" parent="AppTheme">
-        <item name="android:elevation">2dp</item>
+        <item name="android:elevation">@dimen/std_elevation</item>
         <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="AboutImage" parent="AppTheme">
-        <item name="android:elevation">4dp</item>
+        <item name="android:elevation">@dimen/std_elevation</item>
     </style>
 
     <style name="ImageTransition" parent="AppTheme">
@@ -88,7 +92,7 @@
     </style>
 
     <style name="FloatingActionButton" parent="AppTheme">
-        <item name="android:elevation">6dp</item>
+        <item name="android:elevation">@dimen/fab_elevation</item>
         <item name="android:stateListAnimator">@anim/fab_state_list_anim</item>
     </style>
 

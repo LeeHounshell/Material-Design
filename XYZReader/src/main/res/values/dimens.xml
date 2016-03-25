@@ -10,7 +10,9 @@
     <dimen name="about_small_text_size">18sp</dimen>
     <item name="about_line_spacing_multiplier" format="float" type="fraction">1.25</item>
 
+    <dimen name="std_elevation">4dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="admob_elevation">6dp</dimen>
     <dimen name="appbar_layout_height">136dp</dimen>
     <dimen name="toolbar_inset">72dp</dimen>
     <dimen name="toolbar_elevation">6dp</dimen>

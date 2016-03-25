@@ -18,5 +18,7 @@
     <string name="description">This project redesigns the Udacity \'xyzreader\' app to follow the new Material Design guidelines.
         The project shows how to materially improve app behavior and design.
     </string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="test_device">AC98C820A50B4AD8A2106EDE96FB87D4</string>
 
 </resources>

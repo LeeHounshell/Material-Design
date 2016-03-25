@@ -90,6 +90,9 @@
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
     </style>
 
+    <style name="AdMob" parent="AppTheme">
+    </style>
+
     <style name="ArticleDetail" parent="AppTheme">
         <item name="android:background">@android:color/white</item>
     </style>
