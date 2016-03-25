@@ -1,9 +1,16 @@
 <resources>
+
     <!-- list -->
     <dimen name="list_side_margin">4dp</dimen>
     <dimen name="list_bottom_margin">6dp</dimen>
     <dimen name="list_top_margin">4dp</dimen>
     <integer name="list_column_count">2</integer>
+
+    <!-- card -->
+    <dimen name="card_side_margin">4dp</dimen>
+    <dimen name="card_vert_margin">4dp</dimen>
+    <dimen name="card_title_padding">4dp</dimen>
+    <dimen name="card_item_padding">16dp</dimen>
 
     <!-- detail -->
     <bool name="detail_is_card">false</bool>
@@ -15,4 +22,9 @@
     <dimen name="detail_metabar_title_bottom_padding">4dp</dimen>
     <dimen name="detail_body_top_margin">16dp</dimen>
     <dimen name="detail_body_bottom_margin">88dp</dimen>
+
+    <!-- about -->
+    <dimen name="about_item_margin">16dp</dimen>
+    <dimen name="about_bottom_margin">88dp</dimen>
+
 </resources>

@@ -13,5 +13,10 @@
     <string name="pref_default_size">FontStyle.Medium</string>
     <string name="up">Up</string>
     <string name="by">by</string>
+    <string name="contributer">Lee Hounshell</string>
+    <string name="contact">&#160; lee.hounshell@gmail.com</string>
+    <string name="description">This project redesigns the Udacity \'xyzreader\' app to follow the new Material Design guidelines.
+        The project shows how to materially improve app behavior and design.
+    </string>
 
 </resources>

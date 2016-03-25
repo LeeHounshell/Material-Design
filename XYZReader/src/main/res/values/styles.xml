@@ -33,6 +33,9 @@
     <style name="AppTheme.Detail" parent="AppTheme">
     </style>
 
+    <style name="AppTheme.About" parent="AppTheme.List">
+    </style>
+
     <style name="Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
@@ -73,8 +76,25 @@
         <item name="android:background">@color/primary_dark</item>
     </style>
 
+    <style name="ListCardView" parent="AppTheme">
+        <item name="android:layout_marginLeft">@dimen/card_side_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_side_margin</item>
+        <item name="android:layout_marginTop">@dimen/card_vert_margin</item>
+        <item name="android:layout_marginBottom">@dimen/card_vert_margin</item>
+    </style>
+
+    <style name="DrawInsetsFrameLayout" parent="AppTheme">
+        <item name="android:layout_marginTop">@dimen/detail_body_top_margin</item>
+        <item name="android:layout_marginBottom">@dimen/detail_body_bottom_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
     <style name="ArticleDetail" parent="AppTheme">
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="AboutImage" parent="AppTheme">
     </style>
 
     <style name="ImageTransition" parent="AppTheme">

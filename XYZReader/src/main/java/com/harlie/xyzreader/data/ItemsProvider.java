@@ -5,6 +5,7 @@ import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -21,6 +22,7 @@ public class ItemsProvider extends ContentProvider {
     private final static String TAG = "LEE: <" + ItemsProvider.class.getSimpleName() + ">";
 
     private SQLiteOpenHelper mOpenHelper;
+    private Context mContext;
 
     interface Tables {
         String ITEMS = "items";
@@ -43,7 +45,8 @@ public class ItemsProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         Log.v(TAG, "onCreate");
-        mOpenHelper = new ItemsDatabase(getContext());
+        mContext = getContext();
+        mOpenHelper = new ItemsDatabase(mContext);
         return true;
     }
 
@@ -68,7 +71,7 @@ public class ItemsProvider extends ContentProvider {
         final SelectionBuilder builder = buildSelection(uri);
         Cursor cursor = builder.where(selection, selectionArgs).query(db, projection, sortOrder);
         if (cursor != null) {
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(mContext.getContentResolver(), uri);
         }
         return cursor;
     }
@@ -81,7 +84,7 @@ public class ItemsProvider extends ContentProvider {
         switch (match) {
             case ITEMS: {
                 final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
-                                getContext().getContentResolver().notifyChange(uri, null);
+                mContext.getContentResolver().notifyChange(uri, null);
                 return ItemsContract.Items.buildItemUri(_id);
             }
             default: {
@@ -95,7 +98,7 @@ public class ItemsProvider extends ContentProvider {
         Log.v(TAG, "update");
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSelection(uri);
-        getContext().getContentResolver().notifyChange(uri, null);
+        mContext.getContentResolver().notifyChange(uri, null);
         return builder.where(selection, selectionArgs).update(db, values);
     }
 
@@ -104,7 +107,7 @@ public class ItemsProvider extends ContentProvider {
         Log.v(TAG, "delete");
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSelection(uri);
-        getContext().getContentResolver().notifyChange(uri, null);
+        mContext.getContentResolver().notifyChange(uri, null);
         return builder.where(selection, selectionArgs).delete(db);
     }
 

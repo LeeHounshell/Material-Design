@@ -68,7 +68,12 @@
                 android:value="com.harlie.xyzreader.ui.ArticleListActivity" />
         </activity>
 
-        <activity android:name=".ui.AboutActivity" />
+        <activity
+            android:name=".ui.AboutActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.About"
+            android:parentActivityName=".ui.ArticleListActivity">
+        </activity>
 
         <!--
           For Google Analytics Tracking

@@ -283,14 +283,22 @@ public class ArticleDetailFragment extends Fragment implements
         TypedArray ta = getActivity().obtainStyledAttributes(fontPreferences.getFontStyle().getResId(), attrs);
         String str;
         //noinspection ResourceType
+        float titleTextSize = 0, bylineTextSize = 0, bodyTextSize = 0;
+        //noinspection ResourceType
         str = ta.getString(3);
-        float titleTextSize = Float.valueOf(str.substring(0, str.length()-2)); // discard the "sp" part of the style item
+        if (str != null) {
+            titleTextSize = Float.valueOf(str.substring(0, str.length() - 2)); // discard the "sp" part of the style item
+        }
         //noinspection ResourceType
         str = ta.getString(0);
-        float bylineTextSize = Float.valueOf(str.substring(0, str.length()-2)); // discard the "sp" part of the style item
+        if (str != null) {
+            bylineTextSize = Float.valueOf(str.substring(0, str.length() - 2)); // discard the "sp" part of the style item
+        }
         //noinspection ResourceType
         str = ta.getString(1);
-        float bodyTextSize = Float.valueOf(str.substring(0, str.length()-2)); // discard the "sp" part of the style item
+        if (str != null) {
+            bodyTextSize = Float.valueOf(str.substring(0, str.length() - 2)); // discard the "sp" part of the style item
+        }
         Log.v(TAG, "=========> titleTextSize="+titleTextSize+", bylineTextSize="+bylineTextSize+", bodyTextSize="+bodyTextSize);
         ta.recycle();
 

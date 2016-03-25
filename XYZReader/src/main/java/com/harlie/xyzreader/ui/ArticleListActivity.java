@@ -12,6 +12,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -53,9 +54,14 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         configureToolbarTitleBehavior();
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayShowTitleEnabled(false);
+            }
+        }
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
@@ -73,24 +79,28 @@ public class ArticleListActivity extends AppCompatActivity implements
         final String title = getResources().getString(R.string.app_name);
         final CollapsingToolbarLayout collapsingToolbarLayout = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout));
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.toolbar_container);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
+        if (appBarLayout != null) {
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                boolean isShow = false;
+                int scrollRange = -1;
 
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout.getTotalScrollRange();
+                    }
+                    if (collapsingToolbarLayout != null) {
+                        if (scrollRange + verticalOffset == 0) {
+                            collapsingToolbarLayout.setTitle(title);
+                            isShow = true;
+                        } else if (isShow) {
+                            collapsingToolbarLayout.setTitle("");
+                            isShow = false;
+                        }
+                    }
                 }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle(title);
-                    isShow = true;
-                } else if(isShow) {
-                    collapsingToolbarLayout.setTitle("");
-                    isShow = false;
-                }
-            }
-        });
+            });
+        }
     }
 
     private void refresh() {
@@ -131,8 +141,10 @@ public class ArticleListActivity extends AppCompatActivity implements
                 return true;
             }
             case R.id.about: {
-                Intent i = new Intent(this, AboutActivity.class);
-                startActivity(i);
+                String transitionName = "fancy";
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, this.mRecyclerView, transitionName).toBundle();
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent, bundle);
                 return true;
             }
             default: {
