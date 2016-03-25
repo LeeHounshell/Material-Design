@@ -31,6 +31,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
 import com.harlie.xyzreader.util.BitmapUtility;
+import com.harlie.xyzreader.xyzReaderApplication;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -113,10 +114,36 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     @Override
+    public void onDestroy() {
+        Log.v(TAG, "onDestroy");
+        super.onDestroy();
+
+        mCursor = null;
+        mRootView = null;
+        mScrollView = null;
+        mDrawInsetsFrameLayout = null;
+        mStatusBarColorDrawable = null;
+
+        mPhotoContainerView = null;
+        mPhotoView = null;
+        mTitle = null;
+        mBody = null;
+        mImageUri = null;
+
+        // NOTE: build uses 'preprocessor.gradle' here
+        //#IFDEF 'debug'
+        xyzReaderApplication.getInstance().mustDie(this);
+        //#ENDIF
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.v(TAG, "onCreateView");
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+        if (mRootView == null) {
+            return null;
+        }
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
                 mRootView.findViewById(R.id.draw_insets_frame_layout);
         mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
@@ -175,8 +202,12 @@ public class ArticleDetailFragment extends Fragment implements
                     (int) (Color.green(mMutedColor) * 0.9),
                     (int) (Color.blue(mMutedColor) * 0.9));
         }
-        mStatusBarColorDrawable.setColor(color);
-        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
+        if (mStatusBarColorDrawable != null) {
+            mStatusBarColorDrawable.setColor(color);
+        }
+        if (mDrawInsetsFrameLayout != null) {
+            mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
+        }
     }
 
     private static float progress(float v, float min, float max) {
@@ -342,7 +373,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     public int getUpButtonFloor() {
         Log.v(TAG, "getUpButtonFloor");
-        if (mPhotoContainerView == null || mPhotoView.getHeight() == 0) {
+        if (mPhotoContainerView == null || mPhotoView == null || mPhotoView.getHeight() == 0) {
             return Integer.MAX_VALUE;
         }
 

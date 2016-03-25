@@ -30,6 +30,7 @@ import com.harlie.xyzreader.R;
 import com.harlie.xyzreader.data.ArticleLoader;
 import com.harlie.xyzreader.data.ItemsContract;
 import com.harlie.xyzreader.data.UpdaterService;
+import com.harlie.xyzreader.xyzReaderApplication;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -86,8 +87,10 @@ public class ArticleListActivity extends AppCompatActivity implements
 
                 @Override
                 public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if (scrollRange == -1) {
-                        scrollRange = appBarLayout.getTotalScrollRange();
+                    if (appBarLayout != null) {
+                        if (scrollRange == -1) {
+                            scrollRange = appBarLayout.getTotalScrollRange();
+                        }
                     }
                     if (collapsingToolbarLayout != null) {
                         if (scrollRange + verticalOffset == 0) {
@@ -121,6 +124,20 @@ public class ArticleListActivity extends AppCompatActivity implements
         Log.v(TAG, "onStop");
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.v(TAG, "onDestroy");
+        super.onDestroy();
+
+        mSwipeRefreshLayout = null;
+        mRecyclerView = null;
+
+        // NOTE: build uses 'preprocessor.gradle' here
+        //#IFDEF 'debug'
+        xyzReaderApplication.getInstance().mustDie(this);
+        //#ENDIF
     }
 
     @Override
@@ -168,7 +185,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private void updateRefreshingUI() {
         Log.v(TAG, "updateRefreshingUI");
-        mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
+        }
     }
 
     @Override
@@ -180,19 +199,23 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         Log.v(TAG, "onLoadFinished");
-        Adapter adapter = new Adapter(cursor);
-        adapter.setHasStableIds(true);
-        mRecyclerView.setAdapter(adapter);
-        int columnCount = getResources().getInteger(R.integer.list_column_count);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(sglm);
+        if (mRecyclerView != null) {
+            Adapter adapter = new Adapter(cursor);
+            adapter.setHasStableIds(true);
+            mRecyclerView.setAdapter(adapter);
+            int columnCount = getResources().getInteger(R.integer.list_column_count);
+            StaggeredGridLayoutManager sglm =
+                    new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+            mRecyclerView.setLayoutManager(sglm);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         Log.v(TAG, "onLoaderReset");
-        mRecyclerView.setAdapter(null);
+        if (mRecyclerView != null) {
+            mRecyclerView.setAdapter(null);
+        }
     }
 
     private AppCompatActivity getActivity() {
@@ -249,20 +272,22 @@ public class ArticleListActivity extends AppCompatActivity implements
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Log.v(TAG, "onBindViewHolder");
-            mCursor.moveToPosition(position);
-            String title = mCursor.getString(ArticleLoader.Query.TITLE);
-            holder.titleView.setText(title);
-            String subtitle = DateUtils.getRelativeTimeSpanString(
-                    mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                    System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                    DateUtils.FORMAT_ABBREV_ALL).toString()
-                    + " " + getResources().getString(R.string.by) + " "
-                    + mCursor.getString(ArticleLoader.Query.AUTHOR);
-            holder.subtitleView.setText(subtitle);
-            holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
-            holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+            if (mCursor != null) {
+                mCursor.moveToPosition(position);
+                String title = mCursor.getString(ArticleLoader.Query.TITLE);
+                holder.titleView.setText(title);
+                String subtitle = DateUtils.getRelativeTimeSpanString(
+                        mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString()
+                        + " " + getResources().getString(R.string.by) + " "
+                        + mCursor.getString(ArticleLoader.Query.AUTHOR);
+                holder.subtitleView.setText(subtitle);
+                holder.thumbnailView.setImageUrl(
+                        mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                        ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
+                holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+            }
         }
 
         @Override

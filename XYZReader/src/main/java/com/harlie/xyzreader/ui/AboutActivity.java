@@ -17,12 +17,12 @@ import android.view.WindowInsets;
 import android.widget.ImageView;
 
 import com.harlie.xyzreader.R;
+import com.harlie.xyzreader.xyzReaderApplication;
 
 public class AboutActivity extends AppCompatActivity {
     private final static String TAG = "LEE: <" + AboutActivity.class.getSimpleName() + ">";
 
     private int mTopInset;
-    private View mUpButtonContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +92,11 @@ public class AboutActivity extends AppCompatActivity {
             );
         }
 
-        mUpButtonContainer = findViewById(R.id.up_container);
+        final View upButtonContainer = findViewById(R.id.up_container);
 
-        View mUpButton = findViewById(R.id.action_up);
-        if (mUpButton != null) {
-            mUpButton.setOnClickListener(new View.OnClickListener() {
+        View upButton = findViewById(R.id.action_up);
+        if (upButton != null) {
+            upButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.v(TAG, "onClick");
@@ -106,20 +106,33 @@ public class AboutActivity extends AppCompatActivity {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mUpButtonContainer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-                @Override
-                public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                        view.onApplyWindowInsets(windowInsets);
+            if (upButtonContainer != null) {
+                upButtonContainer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                    @Override
+                    public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                            view.onApplyWindowInsets(windowInsets);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                            mTopInset = windowInsets.getSystemWindowInsetTop();
+                        }
+                        upButtonContainer.setTranslationY(mTopInset);
+                        return windowInsets;
                     }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                        mTopInset = windowInsets.getSystemWindowInsetTop();
-                    }
-                    mUpButtonContainer.setTranslationY(mTopInset);
-                    return windowInsets;
-                }
-            });
+                });
+            }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.v(TAG, "onDestroy");
+        super.onDestroy();
+
+        // NOTE: build uses 'preprocessor.gradle' here
+        //#IFDEF 'debug'
+        xyzReaderApplication.getInstance().mustDie(this);
+        //#ENDIF
     }
 
     //from: http://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
