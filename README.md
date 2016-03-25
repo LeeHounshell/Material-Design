@@ -35,6 +35,8 @@ SCREENSHOTS
 ---
 
 
+![screen](../master/screens/xyzreader-movie1.gif)
+
 ![screen](../master/screens/Phone-screenshot1.png)
 
 ![screen](../master/screens/Tablet-screenshot1.png)
