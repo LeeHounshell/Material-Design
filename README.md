@@ -44,7 +44,7 @@ SCREENSHOTS
 
 ## License
 
-This work is Copyright 2015 Lee Hounshell, and 
+This work is Copyright 2016 Lee Hounshell, and 
 is licensed under a Creative Commons Attribution-NonCommercial 3.0 
 Unported License. See http://creativecommons.org/licenses/by-nc/3.0 for
 the license details.
