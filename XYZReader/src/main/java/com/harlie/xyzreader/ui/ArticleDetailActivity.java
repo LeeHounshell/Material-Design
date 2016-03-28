@@ -47,19 +47,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     private View mUpButtonContainer;
     private View mUpButton;
 
-    // NOTE: normally I would not over-ride onBackPressed like this.
-    // because I am using Transitions, if the screen is rotated before transitioning back to ArticleListActivity
-    // then the Toolbar is somehow destroyed. I'm not sure why. But if I run the Activity directly then it works ok.
-    @Override
-    public void onBackPressed() {
-        Log.v(TAG, "onBackPressed");
-        //super.onBackPressed();
-        String transitionName = "fancy";
-        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mUpButton, transitionName).toBundle();
-        Intent intent = new Intent(this, ArticleListActivity.class);
-        startActivity(intent, bundle);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "onCreate");
